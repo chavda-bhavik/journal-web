@@ -3,10 +3,12 @@ import { useDispatch, TypedUseSelectorHook, useSelector } from 'react-redux';
 
 // slice
 import counterReducer from './slice/counterSlice';
+import journalReducer from './journal';
 
 const store = configureStore({
     reducer: {
         counter: counterReducer,
+        journal: journalReducer,
     },
 });
 
