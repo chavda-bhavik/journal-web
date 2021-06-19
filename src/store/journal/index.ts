@@ -4,6 +4,7 @@ interface JournalState {
     loading: boolean;
     errorMessage: string;
     journals: Journal[];
+    journal?: Journal;
     formattedJournals: FormattedJournalType[];
     todaysJournal?: FormattedJournalType;
 }
@@ -14,6 +15,7 @@ const initialState: JournalState = {
     journals: [],
     formattedJournals: [],
     todaysJournal: undefined,
+    journal: undefined,
 };
 
 interface JournalSuccessType {
@@ -29,11 +31,15 @@ export const journalSlice = createSlice({
         loading: (state) => {
             state.loading = true;
         },
-        success: (state, action: PayloadAction<JournalSuccessType>) => {
+        journals: (state, action: PayloadAction<JournalSuccessType>) => {
             state.loading = false;
             state.journals = action.payload.journals;
             state.formattedJournals = action.payload.formattedJournals;
             state.todaysJournal = action.payload.todaysJournal;
+        },
+        journal: (state, action: PayloadAction<Journal>) => {
+            state.journal = action.payload;
+            state.loading = false;
         },
         error: (state, action) => {
             state.loading = false;
@@ -43,6 +49,6 @@ export const journalSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { loading, error, success } = journalSlice.actions;
+export const { loading, error, journals, journal } = journalSlice.actions;
 
 export default journalSlice.reducer;
