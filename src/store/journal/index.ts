@@ -4,13 +4,23 @@ interface JournalState {
     loading: boolean;
     errorMessage: string;
     journals: Journal[];
+    formattedJournals: FormattedJournalType[];
+    todaysJournal?: FormattedJournalType;
 }
 
 const initialState: JournalState = {
     loading: false,
     errorMessage: '',
     journals: [],
+    formattedJournals: [],
+    todaysJournal: undefined,
 };
+
+interface JournalSuccessType {
+    journals: Journal[];
+    formattedJournals: FormattedJournalType[];
+    todaysJournal?: FormattedJournalType;
+}
 
 export const journalSlice = createSlice({
     name: 'counter',
@@ -19,9 +29,11 @@ export const journalSlice = createSlice({
         loading: (state) => {
             state.loading = true;
         },
-        success: (state, action: PayloadAction<Journal[]>) => {
+        success: (state, action: PayloadAction<JournalSuccessType>) => {
             state.loading = false;
-            state.journals = action.payload;
+            state.journals = action.payload.journals;
+            state.formattedJournals = action.payload.formattedJournals;
+            state.todaysJournal = action.payload.todaysJournal;
         },
         error: (state, action) => {
             state.loading = false;

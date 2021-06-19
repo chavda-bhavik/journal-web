@@ -1,5 +1,6 @@
 import { gql } from 'graphql-request';
 import { AppDispatch } from '..';
+import { formatJournals, getTodaysJournal } from '../../shared/helper';
 import client from '../client';
 import { error, loading, success } from './index';
 
@@ -22,7 +23,15 @@ export const fetchJournals = () => async (dispatch: AppDispatch) => {
     try {
         dispatch(loading());
         let result = await client.request(query);
-        dispatch(success(result.getAllJournals));
+        let formattedJournals = formatJournals(result.getAllJournals);
+        let todaysJournal = getTodaysJournal(result.getAllJournals);
+        dispatch(
+            success({
+                journals: result.getAllJournals,
+                formattedJournals: formattedJournals,
+                todaysJournal: todaysJournal,
+            }),
+        );
     } catch (err) {
         dispatch(error(err.message));
     }

@@ -8,3 +8,10 @@ type Journal = {
     improvements?: string;
     status: number;
 };
+type FormattedJournalType = {
+    id: number;
+    title: string;
+    text: string;
+    date: string;
+    status: number;
+};
