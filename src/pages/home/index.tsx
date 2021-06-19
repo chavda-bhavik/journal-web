@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FixedButton } from '../../shared/components/FixedButton';
 import { Header } from './Header';
 import { Journals } from './Journals';
 import { Quote } from './Quote';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { fetchJournals } from '../../store/journal/Actions';
+import { Backdrop } from './Backdrop';
 
 interface homeProps {}
 
 export const home: React.FC<homeProps> = ({}) => {
     const JournalState = useAppSelector((state) => state.journal);
+    const [showDateModal, setShowDateModal] = useState(false);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -17,11 +19,24 @@ export const home: React.FC<homeProps> = ({}) => {
     }, []);
 
     return (
-        <div className="bg-narvik-light min-h-screen">
+        <div className={`bg-narvik-light ${showDateModal ? 'overflow-y-hidden' : ''}`}>
             <Header todaysJournal={JournalState.todaysJournal} />
             <Quote author="Bhavik Chavda" quote="Watever we give, we receive." />
             <Journals journals={JournalState.formattedJournals} />
-            <FixedButton icon={['fas', 'plus']} className="bottom-2 right-2" />
+            <FixedButton
+                icon={['fas', 'plus']}
+                className="bottom-2 right-2"
+                onClick={() => setShowDateModal(true)}
+            />
+            <Backdrop
+                journals={JournalState.formattedJournals}
+                journalsDates={JournalState.formattedJournals.map((journal) =>
+                    Number(journal.date),
+                )}
+                todaysJournal={JournalState.todaysJournal}
+                show={showDateModal}
+                onClose={() => setShowDateModal(false)}
+            />
         </div>
     );
 };

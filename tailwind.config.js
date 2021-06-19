@@ -22,6 +22,9 @@ module.exports = {
             maxWidth: {
                 '9/10': '90%',
             },
+            screens: {
+                xs: '376px',
+            },
         },
     },
     variants: {

@@ -15,6 +15,7 @@
         "graphql": "^15.5.0",
         "graphql-request": "^3.4.0",
         "react": "^17.0.0",
+        "react-day-picker": "^7.4.10",
         "react-dom": "^17.0.0",
         "react-redux": "^7.2.4",
         "wouter": "^2.7.4"
