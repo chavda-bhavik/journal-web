@@ -24,7 +24,6 @@ export const fetchJournals = () => async (dispatch: AppDispatch) => {
         let result = await client.request(query);
         dispatch(success(result.getAllJournals));
     } catch (err) {
-        console.log(err);
         dispatch(error(err.message));
     }
 };

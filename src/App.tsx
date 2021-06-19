@@ -1,25 +1,31 @@
-import React, { useEffect } from 'react';
-import { useAppSelector, useAppDispatch } from './store';
-import { fetchJournals } from './store/journal/APIActions';
-import { decrement, increment } from './store/slice/counterSlice';
+import React from 'react';
+import { Link, Route } from 'wouter';
+
+// pages
+import { home } from './pages/home';
+import { viewJournal } from './pages/view-journal';
+import { journal } from './pages/journal';
 
 function App() {
-    const count = useAppSelector((state) => state.counter.value);
-    const journals = useAppSelector((state) => state.journal.journals);
-    const dispatch = useAppDispatch();
-    console.log(journals);
-    useEffect(() => {
-        dispatch(fetchJournals());
-    }, []);
-
     return (
-        <div className="bg-gray-400">
-            {count}
-            <button className="bg-red-300" onClick={() => dispatch(increment())}>
-                Increment
-            </button>
-            <button onClick={() => dispatch(decrement())}>Decrement</button>
-        </div>
+        <>
+            <div>
+                <ul>
+                    <li>
+                        <Link href="/">Home</Link>
+                    </li>
+                    <li>
+                        <Link href="/journal">Journal</Link>
+                    </li>
+                    <li>
+                        <Link href="/view/1">View</Link>
+                    </li>
+                </ul>
+            </div>
+            <Route path="/" component={home} />
+            <Route path="/view/:id" component={viewJournal} />
+            <Route path="/journal" component={journal} />
+        </>
     );
 }
 

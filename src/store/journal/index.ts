@@ -3,8 +3,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface JournalState {
     loading: boolean;
     errorMessage: string;
-    journals: any[];
+    journals: Journal[];
 }
+
 const initialState: JournalState = {
     loading: false,
     errorMessage: '',
@@ -18,7 +19,7 @@ export const journalSlice = createSlice({
         loading: (state) => {
             state.loading = true;
         },
-        success: (state, action) => {
+        success: (state, action: PayloadAction<Journal[]>) => {
             state.loading = false;
             state.journals = action.payload;
         },
