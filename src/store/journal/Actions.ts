@@ -2,7 +2,7 @@ import { gql } from 'graphql-request';
 import { AppDispatch } from '..';
 import { formatJournals, getTodaysJournal } from '../../shared/helper';
 import client from '../client';
-import { error, loading, journals, journal } from './index';
+import { error, loading, journals, journal, resetJournal } from './index';
 
 const JournalsQuery = gql`
     query Journals($date: DateTime) {
@@ -105,4 +105,8 @@ export const makeJournal = (journalData: Journal) => async (dispatch: AppDispatc
     } catch (err) {
         dispatch(error(err.message));
     }
+};
+
+export const clearJournal = () => (dispatch: AppDispatch) => {
+    dispatch(resetJournal());
 };

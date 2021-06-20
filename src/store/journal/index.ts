@@ -41,6 +41,9 @@ export const journalSlice = createSlice({
             state.journal = action.payload;
             state.loading = false;
         },
+        resetJournal: (state) => {
+            state.journal = undefined;
+        },
         error: (state, action) => {
             state.loading = false;
             state.errorMessage = action.payload;
@@ -49,6 +52,6 @@ export const journalSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { loading, error, journals, journal } = journalSlice.actions;
+export const { loading, error, journals, journal, resetJournal } = journalSlice.actions;
 
 export default journalSlice.reducer;

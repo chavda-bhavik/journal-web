@@ -5,7 +5,7 @@ import { SectionQuote } from './SectionQuote/SectionQuote';
 import { formatJournalObject, formatToContentObject, GetQueryParams } from '../../shared/helper';
 import { useLocation } from 'wouter';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { getSingleJournal, makeJournal } from '../../store/journal/Actions';
+import { clearJournal, getSingleJournal, makeJournal } from '../../store/journal/Actions';
 
 const progressPercentage: number[] = [20, 36, 52, 68, 84, 100];
 
@@ -41,6 +41,8 @@ export const Journal = (): JSX.Element => {
     useEffect(() => {
         if (query.rid) {
             dispatch(getSingleJournal(Number(query.rid)));
+        } else {
+            dispatch(clearJournal());
         }
     }, [query.rid]);
 
@@ -48,6 +50,8 @@ export const Journal = (): JSX.Element => {
         if (JournalState.journal) {
             const obj = formatToContentObject(JournalState.journal);
             setContent(obj);
+        } else {
+            setContent({});
         }
     }, [JournalState.journal]);
 
