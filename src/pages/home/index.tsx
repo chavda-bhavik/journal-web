@@ -6,6 +6,7 @@ import { Quote } from './Quote';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { fetchJournals } from '../../store/journal/Actions';
 import { Backdrop } from './Backdrop';
+import { Stats } from './Stats';
 
 interface homeProps {}
 
@@ -19,9 +20,13 @@ export const home: React.FC<homeProps> = ({}) => {
     }, []);
 
     return (
-        <div className={`bg-narvik-light ${showDateModal ? 'overflow-y-hidden' : ''}`}>
+        <div className={`bg-narvik-light space-y-3 ${showDateModal ? 'overflow-y-hidden' : ''}`}>
             <Header todaysJournal={JournalState.todaysJournal} />
+
+            <Stats entries={10} streak={10} weeks={5} />
+
             <Quote author="Bhavik Chavda" quote="Watever we give, we receive." />
+
             <Journals journals={JournalState.formattedJournals} />
             <FixedButton
                 icon={['fas', 'plus']}
