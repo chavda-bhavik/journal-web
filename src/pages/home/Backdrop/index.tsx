@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import useLocation from 'wouter/use-location';
 import { DatePicker } from '../DatePicker';
 
 interface BackdropProps {
@@ -16,6 +17,7 @@ export const Backdrop: React.FC<BackdropProps> = ({
     todaysJournal,
     show = false,
 }) => {
+    const [, setLocation] = useLocation();
     const [selectedDay, setSelectedDay] = useState<Date>();
     const [buttonData, setButtonData] = useState({
         primaryButtonText: 'Create Todays Entry',
@@ -61,7 +63,7 @@ export const Backdrop: React.FC<BackdropProps> = ({
     };
 
     const onButtonClick = (link?: string): void => {
-        // if (link) router.push(link, undefined, { shallow: true });
+        if (link) setLocation(link);
     };
 
     return (

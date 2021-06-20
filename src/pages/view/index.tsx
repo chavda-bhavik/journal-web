@@ -27,6 +27,10 @@ export const view: React.FC<ViewProps> = (props) => {
         setLocation(`/journal?page=${i}&rid=${props.params.id}`);
     };
 
+    const onBackClick = () => {
+        setLocation('/');
+    };
+
     let DeleteButton = null;
     if (!edit) {
         <span className="fixed bottom-5 right-5 float-right px-3 py-2 rounded-full bg-white text-red-500 shadow-md">
@@ -37,7 +41,7 @@ export const view: React.FC<ViewProps> = (props) => {
     return (
         <div className="bg-narvik-light min-h-screen">
             <div className="flex flex-row py-3 justify-between items-center px-3">
-                <Button onClick={() => {}}>
+                <Button onClick={onBackClick}>
                     <FontAwesomeIcon icon={['fas', 'arrow-left']} />
                 </Button>
                 {/* <IconButton icon={['fas', 'arrow-left']} onClick={goBack} /> */}

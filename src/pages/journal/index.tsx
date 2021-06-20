@@ -77,9 +77,7 @@ export const Journal = (): JSX.Element => {
         };
         try {
             dispatch(makeJournal(final));
-            if (JournalState.journal?.id) {
-                setLocation('/');
-            }
+            setLocation('/');
         } catch (err) {
             console.log(err);
         }

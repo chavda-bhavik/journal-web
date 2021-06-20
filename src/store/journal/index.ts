@@ -25,7 +25,7 @@ interface JournalSuccessType {
 }
 
 export const journalSlice = createSlice({
-    name: 'counter',
+    name: 'journal',
     initialState,
     reducers: {
         loading: (state) => {
