@@ -1,35 +1,31 @@
 import dayjs from 'dayjs';
 import isToday from 'dayjs/plugin/isToday';
 
-// const mappings: Record<number, string> = {
-//     1: 'greatfullness',
-//     2: 'actions',
-//     3: 'affirmation',
-//     4: 'highlights',
-//     5: 'improvements',
-// };
+const mappings: Record<number, string> = {
+    1: 'greatfullness',
+    2: 'actions',
+    3: 'affirmation',
+    4: 'highlights',
+    5: 'improvements',
+};
 
-// export const formatJournalObject = (content: Record<number, string>): Omit<JournalType, 'date'> => {
-//     const journal = Object.keys(content).reduce((obj: any, key: any) => {
-//         if (mappings[key]) obj[mappings[key]] = content[key];
-//         return obj;
-//     }, {});
-//     return journal;
-// };
-// export const formatToContentObject = (
-//     journal: Pick<
-//         Journal,
-//         'id' | 'actions' | 'greatfullness' | 'date' | 'affirmation' | 'highlights' | 'improvements'
-//     >,
-// ): Record<number, string> => {
-//     const obj: Record<number, string> = {};
-//     let index;
-//     for (const key in journal) {
-//         index = Object.keys(mappings).find((k) => mappings[k] === key);
-//         if (index) obj[index] = journal[key];
-//     }
-//     return obj;
-// };
+export const formatJournalObject = (content: Record<number, string>): Omit<Journal, 'date'> => {
+    const journal = Object.keys(content).reduce((obj: any, key: any) => {
+        if (mappings[key]) obj[mappings[key]] = content[key];
+        return obj;
+    }, {});
+    return journal;
+};
+export const formatToContentObject = (journal: Journal): Record<number, string> => {
+    const obj: Record<number, string> = {};
+    let index, mappingKeys: string[];
+    mappingKeys = Object.keys(mappings);
+    for (const key in journal) {
+        index = mappingKeys.find((k) => mappings[k] === key);
+        if (index) obj[index] = journal[key];
+    }
+    return obj;
+};
 
 interface journalReturnType {
     title: string;
@@ -122,4 +118,10 @@ export const getTodaysJournal = (journals: Journal[]): FormattedJournalType | un
         }
     }
     return undefined;
+};
+
+export const GetQueryParams = () => {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const queryParams = Object.fromEntries(urlSearchParams.entries());
+    return queryParams;
 };

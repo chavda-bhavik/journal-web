@@ -5,6 +5,7 @@ import { Button } from '../../shared/components/Button';
 import { Note } from './Note';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { getSingleJournal } from '../../store/journal/Actions';
+import { useLocation } from 'wouter';
 
 interface ViewProps {
     params: {
@@ -13,6 +14,7 @@ interface ViewProps {
 }
 
 export const view: React.FC<ViewProps> = (props) => {
+    const [, setLocation] = useLocation();
     const [edit, setEdit] = useState<boolean>(false);
     const JournalState = useAppSelector((state) => state.journal);
     const dispatch = useAppDispatch();
@@ -22,7 +24,7 @@ export const view: React.FC<ViewProps> = (props) => {
     }, []);
 
     const onClick = (i: number): void => {
-        // router.push(`/journal?page=${i}&rid=${router.query.id}`);
+        setLocation(`/journal?page=${i}&rid=${props.params.id}`);
     };
 
     let DeleteButton = null;
