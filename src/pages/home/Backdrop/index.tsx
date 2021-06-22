@@ -36,7 +36,7 @@ export const Backdrop: React.FC<BackdropProps> = ({
             btnData.secondaryButtonLink = '';
         }
         setButtonData(btnData);
-    }, []);
+    }, [todaysJournal]);
 
     const onDateSelect = (date: Date): void => {
         date.setHours(0, 0, 0, 0);

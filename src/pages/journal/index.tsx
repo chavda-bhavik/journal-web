@@ -1,9 +1,10 @@
 import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'wouter';
+
 import { Notepad } from './Notepad/Notepad';
 import { SectionQuote } from './SectionQuote/SectionQuote';
 import { formatJournalObject, formatToContentObject, GetQueryParams } from '../../shared/helper';
-import { useLocation } from 'wouter';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { clearJournal, getSingleJournal, makeJournal } from '../../store/journal/Actions';
 

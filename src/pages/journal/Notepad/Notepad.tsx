@@ -60,7 +60,7 @@ export const Notepad: React.FC<NotepadProps> = ({
         } else {
             setListText(content[stage] ? content[stage] : '<li>&nbsp;</li>');
         }
-    }, []);
+    }, [content]);
 
     const handleStageChange = (isNext = true): void => {
         if (isNext && isLastStage()) {
@@ -101,6 +101,7 @@ export const Notepad: React.FC<NotepadProps> = ({
                 stage={stage}
                 changeStage={() => handleStageChange(false)}
                 close={onCloseClick}
+                backButtonDisabled={phase === 'evening' && stage === 4}
                 progress={
                     phase === 'complete'
                         ? progressPercentage
