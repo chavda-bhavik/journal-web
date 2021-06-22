@@ -19,8 +19,21 @@ export const home: React.FC<homeProps> = ({}) => {
         dispatch(fetchJournals());
     }, []);
 
+    const toggleBodyOverflowHidden = (add: boolean) => {
+        let body = document.getElementsByTagName('body')[0];
+        if (add) {
+            body.classList.add('overflow-hidden');
+        } else {
+            body.classList.remove('overflow-hidden');
+        }
+    };
+    const toggleDateModal = (status: boolean) => {
+        toggleBodyOverflowHidden(status);
+        setShowDateModal(status);
+    };
+
     return (
-        <div className={`bg-narvik-light space-y-3 ${showDateModal ? 'overflow-y-hidden' : ''}`}>
+        <div className={`bg-narvik-light space-y-3`}>
             <Header todaysJournal={JournalState.todaysJournal} />
 
             <Stats entries={10} streak={10} weeks={5} />
@@ -31,16 +44,17 @@ export const home: React.FC<homeProps> = ({}) => {
             <FixedButton
                 icon={['fas', 'plus']}
                 className="bottom-2 right-2"
-                onClick={() => setShowDateModal(true)}
+                onClick={() => toggleDateModal(true)}
             />
             <Backdrop
                 journals={JournalState.formattedJournals}
                 journalsDates={JournalState.formattedJournals.map((journal) =>
                     Number(journal.date),
                 )}
+                toggleBodyOverflow={toggleBodyOverflowHidden}
                 todaysJournal={JournalState.todaysJournal}
                 show={showDateModal}
-                onClose={() => setShowDateModal(false)}
+                onClose={() => toggleDateModal(false)}
             />
         </div>
     );

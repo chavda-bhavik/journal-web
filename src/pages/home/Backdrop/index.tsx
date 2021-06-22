@@ -8,6 +8,7 @@ interface BackdropProps {
     journals: FormattedJournalType[];
     todaysJournal?: FormattedJournalType;
     show?: boolean;
+    toggleBodyOverflow: (add: boolean) => void;
 }
 
 export const Backdrop: React.FC<BackdropProps> = ({
@@ -16,6 +17,7 @@ export const Backdrop: React.FC<BackdropProps> = ({
     journals,
     todaysJournal,
     show = false,
+    toggleBodyOverflow,
 }) => {
     const [, setLocation] = useLocation();
     const [selectedDay, setSelectedDay] = useState<Date>();
@@ -63,7 +65,10 @@ export const Backdrop: React.FC<BackdropProps> = ({
     };
 
     const onButtonClick = (link?: string): void => {
-        if (link) setLocation(link);
+        if (link) {
+            toggleBodyOverflow(false);
+            setLocation(link);
+        }
     };
 
     return (

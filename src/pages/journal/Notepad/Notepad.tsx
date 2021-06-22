@@ -60,7 +60,7 @@ export const Notepad: React.FC<NotepadProps> = ({
         } else {
             setListText(content[stage] ? content[stage] : '<li>&nbsp;</li>');
         }
-    }, [content]);
+    }, [content, stage]);
 
     const handleStageChange = (isNext = true): void => {
         if (isNext && isLastStage()) {
