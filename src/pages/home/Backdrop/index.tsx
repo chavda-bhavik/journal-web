@@ -94,7 +94,7 @@ export const Backdrop: React.FC<BackdropProps> = ({
 
                 <div className="bg-white rounded-t-md xs:rounded-md text-left overflow-hidden transform transition-all w-full xs:w-auto z-20">
                     <DatePicker selectedDay={selectedDay} setSelectedDay={onDateSelect} />
-                    <div className="bg-gray-50 px-4 py-3 w-full">
+                    <div className="bg-gray-50 px-4 xs:pb-3 pb-6 w-full">
                         <button
                             type="button"
                             className="block w-full rounded-md shadow border border-transparent bg-gold-base px-4 py-2 text-base font-medium text-brown-dark focus:outline-none"

@@ -16,8 +16,12 @@ export const Header: React.FC<HeaderProps> = ({ todaysJournal }) => {
     return (
         <div className="bg-narvik-base py-2 px-3">
             <Navbar />
-            <Title title="Today" />
-            {todaysJournal && <Journal journal={todaysJournal} onClick={onJournalClick} />}
+            {todaysJournal && (
+                <>
+                    <Title title="Today" />
+                    <Journal journal={todaysJournal} onClick={onJournalClick} />
+                </>
+            )}
         </div>
     );
 };

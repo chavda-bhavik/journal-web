@@ -47,6 +47,7 @@ export const home: React.FC<homeProps> = ({}) => {
                 className="bottom-2 right-2"
                 onClick={() => toggleDateModal(true)}
             />
+
             <Backdrop
                 journals={JournalState.formattedJournals}
                 journalsDates={JournalState.formattedJournals.map((journal) =>
