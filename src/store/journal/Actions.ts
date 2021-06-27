@@ -2,7 +2,7 @@ import { gql } from 'graphql-request';
 import { AppDispatch } from '..';
 import { formatJournals, getTodaysJournal, groupJournals } from '../../shared/helper';
 import client from '../client';
-import { error, loading, journals, journal, resetJournal } from './index';
+import { error, loading, journals, journal, resetJournal, search } from './index';
 
 const JournalsQuery = gql`
     query Journals($date: DateTime) {
@@ -116,4 +116,37 @@ export const makeJournal = (journalData: Journal) => async (dispatch: AppDispatc
 
 export const clearJournal = () => (dispatch: AppDispatch) => {
     dispatch(resetJournal());
+};
+
+export const searchJournals = (term: string, journals: Journal[]) => (dispatch: AppDispatch) => {
+    let filteredJournals = journals.filter(
+        (journal) =>
+            journal.actions?.includes(term) ||
+            journal.affirmation?.includes(term) ||
+            journal.greatfullness?.includes(term) ||
+            journal.highlights?.includes(term) ||
+            journal.improvements?.includes(term),
+    );
+    let formattedJournals = formatJournals(filteredJournals);
+    let groupedJournals = groupJournals(formattedJournals);
+    dispatch(
+        search({
+            formattedJournals,
+            groupedJournals,
+            searched: true,
+        }),
+    );
+};
+
+export const resetJournals = (journals: Journal[]) => (dispatch: AppDispatch) => {
+    let filteredJournals = journals;
+    let formattedJournals = formatJournals(filteredJournals);
+    let groupedJournals = groupJournals(formattedJournals);
+    dispatch(
+        search({
+            formattedJournals,
+            groupedJournals,
+            searched: false,
+        }),
+    );
 };

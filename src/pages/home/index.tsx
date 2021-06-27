@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { FixedButton } from '../../shared/components/FixedButton';
-import { Header } from './Header';
 import { Journals } from './Journals';
 import { Quote } from './Quote';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { fetchJournals } from '../../store/journal/Actions';
 import { Backdrop } from './Backdrop';
 import { Stats } from './Stats';
+import { Navbar } from './Navbar';
+import { useLocation } from 'wouter';
+import { Title } from './Title';
+import { Journal } from './Journal';
 
 interface homeProps {}
 
 export const home: React.FC<homeProps> = ({}) => {
+    const [, setLocation] = useLocation();
     const JournalState = useAppSelector((state) => state.journal);
     const [showDateModal, setShowDateModal] = useState(false);
     const dispatch = useAppDispatch();
@@ -27,18 +31,36 @@ export const home: React.FC<homeProps> = ({}) => {
             body.classList.remove('overflow-hidden');
         }
     };
+
+    const onJournalClick = (journal: FormattedJournalType) => {
+        setLocation(`/view/${journal.id}`);
+    };
+
     const toggleDateModal = (status: boolean) => {
         toggleBodyOverflowHidden(status);
         setShowDateModal(status);
     };
 
     return (
-        <div className={`bg-narvik-light space-y-3`}>
-            <Header todaysJournal={JournalState.todaysJournal} />
+        <div className={`bg-narvik-light min-h-screen space-y-3`}>
+            <div className="bg-narvik-base py-2 px-3">
+                <Navbar />
 
-            <Stats stats={JournalState.stats} />
+                {JournalState.todaysJournal && !JournalState.searched && (
+                    <>
+                        <Title title="Today" />
+                        <Journal journal={JournalState.todaysJournal} onClick={onJournalClick} />
+                    </>
+                )}
+            </div>
 
-            <Quote author="Bhavik Chavda" quote="Watever we give, we receive." />
+            {!JournalState.searched && (
+                <>
+                    <Stats stats={JournalState.stats} />
+
+                    <Quote author="Bhavik Chavda" quote="Watever we give, we receive." />
+                </>
+            )}
 
             <Journals journals={JournalState.groupedJournals} />
 

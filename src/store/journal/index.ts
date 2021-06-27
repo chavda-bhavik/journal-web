@@ -9,6 +9,7 @@ interface JournalState {
     groupedJournals: GroupedJournalsType;
     todaysJournal?: FormattedJournalType;
     stats: stats;
+    searched: boolean;
 }
 
 const initialState: JournalState = {
@@ -24,6 +25,7 @@ const initialState: JournalState = {
         weeks: 0,
         total: 0,
     },
+    searched: false,
 };
 
 interface JournalSuccessType {
@@ -32,6 +34,11 @@ interface JournalSuccessType {
     todaysJournal?: FormattedJournalType;
     groupedJournals: GroupedJournalsType;
     stats: stats;
+}
+interface JournalSearchType {
+    formattedJournals: FormattedJournalType[];
+    groupedJournals: GroupedJournalsType;
+    searched: boolean;
 }
 
 export const journalSlice = createSlice({
@@ -60,10 +67,15 @@ export const journalSlice = createSlice({
             state.loading = false;
             state.errorMessage = action.payload;
         },
+        search: (state, action: PayloadAction<JournalSearchType>) => {
+            state.formattedJournals = action.payload.formattedJournals;
+            state.groupedJournals = action.payload.groupedJournals;
+            state.searched = action.payload.searched;
+        },
     },
 });
 
 // Action creators are generated for each case reducer function
-export const { loading, error, journals, journal, resetJournal } = journalSlice.actions;
+export const { loading, error, journals, journal, resetJournal, search } = journalSlice.actions;
 
 export default journalSlice.reducer;
