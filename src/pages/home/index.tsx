@@ -36,11 +36,12 @@ export const home: React.FC<homeProps> = ({}) => {
         <div className={`bg-narvik-light space-y-3`}>
             <Header todaysJournal={JournalState.todaysJournal} />
 
-            <Stats entries={10} streak={10} weeks={5} />
+            <Stats stats={JournalState.stats} />
 
             <Quote author="Bhavik Chavda" quote="Watever we give, we receive." />
 
-            <Journals journals={JournalState.formattedJournals} />
+            <Journals journals={JournalState.groupedJournals} />
+
             <FixedButton
                 icon={['fas', 'plus']}
                 className="bottom-2 right-2"

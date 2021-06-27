@@ -6,7 +6,9 @@ interface JournalState {
     journals: Journal[];
     journal?: Journal;
     formattedJournals: FormattedJournalType[];
+    groupedJournals: GroupedJournalsType;
     todaysJournal?: FormattedJournalType;
+    stats: stats;
 }
 
 const initialState: JournalState = {
@@ -16,12 +18,20 @@ const initialState: JournalState = {
     formattedJournals: [],
     todaysJournal: undefined,
     journal: undefined,
+    groupedJournals: {},
+    stats: {
+        months: 0,
+        weeks: 0,
+        total: 0,
+    },
 };
 
 interface JournalSuccessType {
     journals: Journal[];
     formattedJournals: FormattedJournalType[];
     todaysJournal?: FormattedJournalType;
+    groupedJournals: GroupedJournalsType;
+    stats: stats;
 }
 
 export const journalSlice = createSlice({
@@ -36,6 +46,8 @@ export const journalSlice = createSlice({
             state.journals = action.payload.journals;
             state.formattedJournals = action.payload.formattedJournals;
             state.todaysJournal = action.payload.todaysJournal;
+            state.groupedJournals = action.payload.groupedJournals;
+            state.stats = action.payload.stats;
         },
         journal: (state, action: PayloadAction<Journal>) => {
             state.journal = action.payload;

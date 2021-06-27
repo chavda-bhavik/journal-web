@@ -15,3 +15,10 @@ type FormattedJournalType = {
     date: string;
     status: number;
 };
+type stats = {
+    total: number;
+    months: number;
+    weeks: number;
+};
+
+type GroupedJournalsType = Record<string, FormattedJournalType[]>;

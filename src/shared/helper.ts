@@ -21,7 +21,9 @@ export const formatToContentObject = (journal: Journal): Record<number, string> 
     let index, mappingKeys: string[];
     mappingKeys = Object.keys(mappings);
     for (const key in journal) {
+        // @ts-ignore
         index = mappingKeys.find((k) => mappings[k] === key);
+        // @ts-ignore
         if (index) obj[index] = journal[key];
     }
     return obj;
@@ -124,4 +126,15 @@ export const GetQueryParams = () => {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const queryParams = Object.fromEntries(urlSearchParams.entries());
     return queryParams;
+};
+
+export const groupJournals = (journals: FormattedJournalType[]): GroupedJournalsType => {
+    let dateStr = '';
+    let groupedJournalsGroupByDates = journals.reduce((obj, journal) => {
+        dateStr = dayjs(Number(journal.date)).format('MMMM YYYY');
+        obj.set(dateStr, [...(obj.get(dateStr) || []), journal]);
+        return obj;
+    }, new Map());
+    let grpdJouranals = Object.fromEntries(groupedJournalsGroupByDates);
+    return grpdJouranals;
 };
