@@ -10,6 +10,7 @@ import { Navbar } from './Navbar';
 import { useLocation } from 'wouter';
 import { Title } from './Title';
 import { Journal } from './Journal';
+import { TodaysContent } from './TodaysContent';
 
 interface homeProps {}
 
@@ -43,14 +44,11 @@ export const home: React.FC<homeProps> = ({}) => {
 
     return (
         <div className={`bg-narvik-light min-h-screen space-y-3`}>
-            <div className="bg-narvik-base py-2 px-3">
+            <div className=" py-2 px-3">
                 <Navbar />
 
-                {JournalState.todaysJournal && !JournalState.searched && (
-                    <>
-                        <Title title="Today" />
-                        <Journal journal={JournalState.todaysJournal} onClick={onJournalClick} />
-                    </>
+                {!JournalState.searched && (
+                    <TodaysContent todaysJournal={JournalState.todaysJournal} />
                 )}
             </div>
 

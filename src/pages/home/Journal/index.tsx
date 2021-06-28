@@ -45,7 +45,7 @@ export const Journal: React.FC<JournalProps> = ({
                 <p className="uppercase text-brown-light text-sm sm:text-base lg:text-xl font-normal lg:font-medium">
                     {journal.title}
                 </p>
-                <p className="text-brown-dark break-normal font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl">
+                <p className="text-brown-dark break-all font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl">
                     {journal.text}
                 </p>
             </div>
