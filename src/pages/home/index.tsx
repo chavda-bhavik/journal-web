@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { FixedButton } from '../../shared/components/FixedButton';
-import { Journals } from './Journals';
-import { Quote } from './Quote';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { fetchJournals } from '../../store/journal/Actions';
 import { Backdrop } from './Backdrop';
 import { Stats } from './Stats';
 import { Navbar } from './Navbar';
-import { useLocation } from 'wouter';
-import { Title } from './Title';
-import { Journal } from './Journal';
 import { TodaysContent } from './TodaysContent';
+import { Quote } from './Quote';
+import { Journals } from './Journals';
+import { FixedButton } from '../../shared/components/FixedButton';
 
 interface homeProps {}
 
 export const home: React.FC<homeProps> = ({}) => {
-    const [, setLocation] = useLocation();
     const JournalState = useAppSelector((state) => state.journal);
     const [showDateModal, setShowDateModal] = useState(false);
     const dispatch = useAppDispatch();
@@ -31,10 +27,6 @@ export const home: React.FC<homeProps> = ({}) => {
         } else {
             body.classList.remove('overflow-hidden');
         }
-    };
-
-    const onJournalClick = (journal: FormattedJournalType) => {
-        setLocation(`/view/${journal.id}`);
     };
 
     const toggleDateModal = (status: boolean) => {

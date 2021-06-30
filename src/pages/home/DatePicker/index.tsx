@@ -1,5 +1,7 @@
 import React from 'react';
-import DayPicker from 'react-day-picker/DayPicker';
+import DP from 'react-day-picker/DayPicker';
+// @ts-ignore
+const DayPicker = DP.__esModule ? DP.default : DP;
 import 'react-day-picker/lib/style.css';
 
 const styles = `
@@ -35,7 +37,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
             <DayPicker
                 disabledDays={{ after: new Date() }}
                 selectedDays={selectedDay}
-                onDayClick={(day) => setSelectedDay(day)}
+                onDayClick={(day: Date) => setSelectedDay(day)}
             />
         </>
     );
