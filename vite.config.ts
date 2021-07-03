@@ -12,19 +12,32 @@ export default defineConfig({
         tsconfigPaths(),
         reactRefresh(),
         VitePWA({
+            registerType: 'autoUpdate',
             workbox: {
-                additionalManifestEntries: [
-                    // eslint-disable-next-line unicorn/no-null
-                    { url: 'https://rsms.me/inter/inter.css', revision: null },
-                ],
                 cleanupOutdatedCaches: true,
                 clientsClaim: true,
                 skipWaiting: true,
                 navigateFallback: undefined,
+                runtimeCaching: [
+                    {
+                        handler: 'NetworkOnly',
+                        urlPattern: 'http://localhost:4000/graphql',
+                        method: 'POST',
+                        options: {
+                            backgroundSync: {
+                                name: 'journals',
+                                options: {
+                                    maxRetentionTime: 24 * 60 * 90,
+                                },
+                            },
+                        },
+                    },
+                ],
             },
             manifest: {
                 name: 'five minute journal lite',
                 short_name: 'Lite',
+                display: 'fullscreen',
                 theme_color: '#EDEDE5',
                 icons: [
                     {
