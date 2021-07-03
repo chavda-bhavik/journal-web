@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'wouter';
+import { v4 as uuid } from 'uuid';
 
 import { Notepad } from './Notepad/Notepad';
 import { SectionQuote } from './SectionQuote/SectionQuote';
@@ -41,7 +42,7 @@ export const Journal = (): JSX.Element => {
 
     useEffect(() => {
         if (query.rid) {
-            dispatch(getSingleJournal(Number(query.rid)));
+            dispatch(getSingleJournal(query.rid));
         } else {
             dispatch(clearJournal());
         }
@@ -80,6 +81,8 @@ export const Journal = (): JSX.Element => {
             date: dayjs(date).format('MM/DD/YYYY'),
             status: info.phase === 'morning' ? 1 : 2,
         };
+        if (!query.rid) final.id = uuid();
+        else final.id = query.rid;
         try {
             dispatch(makeJournal(final));
             setLocation('/');

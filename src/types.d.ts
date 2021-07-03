@@ -1,5 +1,5 @@
 type Journal = {
-    id: number;
+    id: string;
     date: string;
     actions?: string;
     greatfullness?: string;
@@ -9,7 +9,7 @@ type Journal = {
     status: number;
 };
 type FormattedJournalType = {
-    id: number;
+    id: string;
     title: string;
     text: string;
     date: string;

@@ -19,7 +19,7 @@ const JournalsQuery = gql`
     }
 `;
 const SingleJournalQuery = gql`
-    query GetJournal($id: Int, $date: DateTime) {
+    query GetJournal($id: String, $date: DateTime) {
         journal(id: $id, date: $date) {
             id
             actions
@@ -34,6 +34,7 @@ const SingleJournalQuery = gql`
 `;
 const JournalMutation = gql`
     mutation Journal(
+        $id: String!
         $date: DateTime!
         $actions: String
         $greatfullness: String
@@ -44,6 +45,7 @@ const JournalMutation = gql`
     ) {
         journal(
             values: {
+                id: $id
                 date: $date
                 actions: $actions
                 greatfullness: $greatfullness
@@ -90,12 +92,10 @@ export const fetchJournals = () => async (dispatch: AppDispatch) => {
     }
 };
 
-export const getSingleJournal = (id: number) => async (dispatch: AppDispatch) => {
+export const getSingleJournal = (id: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(loading());
-        let result = await client.request(SingleJournalQuery, {
-            id: Number(id),
-        });
+        let result = await client.request(SingleJournalQuery, { id });
         dispatch(journal(result.journal));
     } catch (err) {
         dispatch(error(err.message));

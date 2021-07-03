@@ -9,7 +9,7 @@ import { useLocation } from 'wouter';
 
 interface ViewProps {
     params: {
-        id: number;
+        id: string;
     };
 }
 
