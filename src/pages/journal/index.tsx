@@ -42,7 +42,7 @@ export const Journal = (): JSX.Element => {
 
     useEffect(() => {
         if (query.rid) {
-            dispatch(getSingleJournal(query.rid));
+            dispatch(getSingleJournal(query.rid, JournalState.journals, JournalState.fetched));
         } else {
             dispatch(clearJournal());
         }
@@ -84,7 +84,7 @@ export const Journal = (): JSX.Element => {
         if (!query.rid) final.id = uuid();
         else final.id = query.rid;
         try {
-            dispatch(makeJournal(final));
+            dispatch(makeJournal(final, JournalState.journals, date));
             setLocation('/');
         } catch (err) {
             console.log(err);

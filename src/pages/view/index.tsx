@@ -20,7 +20,7 @@ export const view: React.FC<ViewProps> = (props) => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(getSingleJournal(props.params.id));
+        dispatch(getSingleJournal(props.params.id, JournalState.journals, JournalState.fetched));
     }, []);
 
     const onClick = (i: number): void => {

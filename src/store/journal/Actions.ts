@@ -85,6 +85,7 @@ export const fetchJournals = () => async (dispatch: AppDispatch) => {
                     total: formattedJournals.length,
                     weeks: 10,
                 },
+                fetched: true,
             }),
         );
     } catch (err) {
@@ -92,27 +93,76 @@ export const fetchJournals = () => async (dispatch: AppDispatch) => {
     }
 };
 
-export const getSingleJournal = (id: string) => async (dispatch: AppDispatch) => {
-    try {
-        dispatch(loading());
-        let result = await client.request(SingleJournalQuery, { id });
-        dispatch(journal(result.journal));
-    } catch (err) {
-        dispatch(error(err.message));
-    }
-};
+export const getSingleJournal =
+    (id: string, journals: Journal[], fetched: Boolean) => async (dispatch: AppDispatch) => {
+        try {
+            dispatch(loading());
+            let singleJournal: Journal | undefined;
+            if (fetched) {
+                singleJournal = journals.find((jour) => jour.id === id);
+                if (singleJournal) dispatch(journal({ journal: singleJournal }));
+            } else {
+                let result = await client.request(SingleJournalQuery, { id });
+                dispatch(journal(result.journal));
+            }
+        } catch (err) {
+            dispatch(error(err.message));
+        }
+    };
 
-export const makeJournal = (journalData: Journal) => async (dispatch: AppDispatch) => {
-    try {
-        dispatch(loading());
-        let result = await client.request(JournalMutation, {
-            ...journalData,
-        });
-        dispatch(journal(result.Journal));
-    } catch (err) {
-        dispatch(error(err.message));
-    }
-};
+export const makeJournal =
+    (journalData: Journal, journals: Journal[], journalDateValue: number) =>
+    async (dispatch: AppDispatch) => {
+        let journalToBeUpdated = journalData;
+        try {
+            dispatch(loading());
+            let result = await client.request(JournalMutation, {
+                ...journalData,
+            });
+            // if request gets succeed and response is available
+            if (result.journal) journalToBeUpdated = result.journal;
+        } catch (err) {
+            dispatch(error(err.message));
+        }
+
+        journalToBeUpdated.date = '' + journalDateValue;
+        let tempJournal = journals.find((jour) => jour.id === journalToBeUpdated.id),
+            newJournals: Journal[];
+        if (tempJournal) {
+            // update
+            newJournals = journals.map((jour) => {
+                if (jour.id === journalData.id)
+                    return {
+                        ...jour,
+                        ...journalData,
+                    };
+                else return { ...jour };
+            });
+        } else {
+            // add
+            newJournals = [...journals, { ...journalToBeUpdated }];
+            newJournals = newJournals.sort(
+                (jour1, jour2) => Number(jour1.date) - Number(jour2.date),
+            );
+        }
+        let formattedJournals = formatJournals(newJournals);
+        let todaysJournal = getTodaysJournal(newJournals);
+        let groupedJournals = groupJournals(formattedJournals);
+        dispatch(
+            journal({
+                journal: journalToBeUpdated,
+                journals: newJournals,
+                formattedJournals: formattedJournals,
+                groupedJournals: groupedJournals,
+                stats: {
+                    months: Object.keys(groupedJournals).length,
+                    total: formattedJournals.length,
+                    weeks: 10,
+                },
+                todaysJournal: todaysJournal,
+            }),
+        );
+    };
 
 export const clearJournal = () => (dispatch: AppDispatch) => {
     dispatch(resetJournal());

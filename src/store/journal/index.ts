@@ -10,6 +10,7 @@ interface JournalState {
     todaysJournal?: FormattedJournalType;
     stats: stats;
     searched: boolean;
+    fetched: boolean;
 }
 
 const initialState: JournalState = {
@@ -26,6 +27,7 @@ const initialState: JournalState = {
         total: 0,
     },
     searched: false,
+    fetched: false,
 };
 
 interface JournalSuccessType {
@@ -34,6 +36,15 @@ interface JournalSuccessType {
     todaysJournal?: FormattedJournalType;
     groupedJournals: GroupedJournalsType;
     stats: stats;
+    fetched?: boolean;
+}
+interface JournalMakeSuccessType {
+    journal: Journal;
+    journals?: Journal[];
+    formattedJournals?: FormattedJournalType[];
+    todaysJournal?: FormattedJournalType;
+    groupedJournals?: GroupedJournalsType;
+    stats?: stats;
 }
 interface JournalSearchType {
     formattedJournals: FormattedJournalType[];
@@ -55,9 +66,19 @@ export const journalSlice = createSlice({
             state.todaysJournal = action.payload.todaysJournal;
             state.groupedJournals = action.payload.groupedJournals;
             state.stats = action.payload.stats;
+            if (action.payload.fetched) state.fetched = action.payload.fetched;
         },
-        journal: (state, action: PayloadAction<Journal>) => {
-            state.journal = action.payload;
+        journal: (state, action: PayloadAction<JournalMakeSuccessType>) => {
+            // update journals with new journal added/updated
+            // sort them by date
+            // set formatted/todays/grouped journals
+            state.journal = action.payload.journal;
+            if (action.payload.formattedJournals)
+                state.formattedJournals = action.payload.formattedJournals;
+            if (action.payload.groupedJournals)
+                state.groupedJournals = action.payload.groupedJournals;
+            if (action.payload.journals) state.journals = action.payload.journals;
+            if (action.payload.stats) state.stats = action.payload.stats;
             state.loading = false;
         },
         resetJournal: (state) => {

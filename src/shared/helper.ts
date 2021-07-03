@@ -106,15 +106,16 @@ export const formatJournals = (journals: Journal[] | undefined): FormattedJourna
 export const getTodaysJournal = (journals: Journal[]): FormattedJournalType | undefined => {
     dayjs.extend(isToday);
     if (journals) {
-        if (dayjs(Number(journals[0].date)).isToday()) {
-            const j = getPriorityJournal(journals[0]);
+        let todaysJournal = journals.find((jour) => dayjs(Number(jour.date)).isToday());
+        if (todaysJournal) {
+            const j = getPriorityJournal(todaysJournal);
             const text = formatHTML(j.text);
             const obj: FormattedJournalType = {
-                id: journals[0].id,
-                date: journals[0].date,
+                id: todaysJournal.id,
+                date: todaysJournal.date,
                 text: text,
                 title: j.title,
-                status: journals[0].status,
+                status: todaysJournal.status,
             };
             return obj;
         }
