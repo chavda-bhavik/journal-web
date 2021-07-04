@@ -8,17 +8,8 @@ import { view } from './pages/view';
 import { Journal } from './pages/journal';
 
 function App() {
-    const updateSW = registerSW({
-        onNeedRefresh() {
-            console.log('onNeedRefresh');
-            // show a prompt to user
-        },
-        onOfflineReady() {
-            console.log('offline ready');
-            // show a ready to work offline to user
-        },
-    });
-    updateSW();
+    registerSW();
+
     return (
         <>
             <Route path="/" component={home} />

@@ -17,8 +17,8 @@ export const home: React.FC<homeProps> = ({}) => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(fetchJournals());
-    }, []);
+        if (window.navigator.onLine) dispatch(fetchJournals());
+    }, [window.navigator.onLine]);
 
     const toggleBodyOverflowHidden = (add: boolean) => {
         let body = document.getElementsByTagName('body')[0];
