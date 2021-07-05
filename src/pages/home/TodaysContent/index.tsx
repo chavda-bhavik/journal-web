@@ -22,6 +22,10 @@ export const TodaysContent: React.FC<TodaysContentProps> = ({ todaysJournal }) =
         setLocation('/journal?phase=evening&page=4');
     };
 
+    const onJournalClick = (journal: FormattedJournalType) => {
+        setLocation(`/view/${journal.id}`);
+    };
+
     let content = <StartContent onCreateMorningEntry={createMorningEntry} />;
 
     if (todaysJournal) {
@@ -36,7 +40,7 @@ export const TodaysContent: React.FC<TodaysContentProps> = ({ todaysJournal }) =
                         </Button>
                     )}
                 </div>
-                <Journal journal={todaysJournal} />
+                <Journal journal={todaysJournal} onClick={onJournalClick} />
             </>
         );
     }

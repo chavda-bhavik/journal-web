@@ -131,10 +131,10 @@ export const makeJournal =
         if (tempJournal) {
             // update
             newJournals = journals.map((jour) => {
-                if (jour.id === journalData.id)
+                if (jour.id === journalToBeUpdated.id)
                     return {
                         ...jour,
-                        ...journalData,
+                        ...journalToBeUpdated,
                     };
                 else return { ...jour };
             });

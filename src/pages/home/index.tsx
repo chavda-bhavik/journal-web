@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { fetchJournals } from '../../store/journal/Actions';
-import { Backdrop } from './Backdrop';
+import { DateModal } from './DateModal';
 import { Stats } from './Stats';
 import { Navbar } from './Navbar';
 import { TodaysContent } from './TodaysContent';
@@ -20,17 +20,7 @@ export const home: React.FC<homeProps> = ({}) => {
         if (window.navigator.onLine) dispatch(fetchJournals());
     }, [window.navigator.onLine]);
 
-    const toggleBodyOverflowHidden = (add: boolean) => {
-        let body = document.getElementsByTagName('body')[0];
-        if (add) {
-            body.classList.add('overflow-hidden');
-        } else {
-            body.classList.remove('overflow-hidden');
-        }
-    };
-
     const toggleDateModal = (status: boolean) => {
-        toggleBodyOverflowHidden(status);
         setShowDateModal(status);
     };
 
@@ -60,12 +50,11 @@ export const home: React.FC<homeProps> = ({}) => {
                 onClick={() => toggleDateModal(true)}
             />
 
-            <Backdrop
+            <DateModal
                 journals={JournalState.formattedJournals}
                 journalsDates={JournalState.formattedJournals.map((journal) =>
                     Number(journal.date),
                 )}
-                toggleBodyOverflow={toggleBodyOverflowHidden}
                 todaysJournal={JournalState.todaysJournal}
                 show={showDateModal}
                 onClose={() => toggleDateModal(false)}

@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import useLocation from 'wouter/use-location';
+import { Backdrop } from '../../../shared/components/Backdrop';
 import { DatePicker } from '../DatePicker';
 
-interface BackdropProps {
+interface DateModalProps {
     onClose?: () => void;
     journalsDates: number[];
     journals: FormattedJournalType[];
     todaysJournal?: FormattedJournalType;
     show?: boolean;
-    toggleBodyOverflow: (add: boolean) => void;
 }
 
-export const Backdrop: React.FC<BackdropProps> = ({
+export const DateModal: React.FC<DateModalProps> = ({
     onClose = () => {},
     journalsDates,
     journals,
     todaysJournal,
     show = false,
-    toggleBodyOverflow,
 }) => {
     const [, setLocation] = useLocation();
     const [selectedDay, setSelectedDay] = useState<Date>();
@@ -66,52 +65,30 @@ export const Backdrop: React.FC<BackdropProps> = ({
 
     const onButtonClick = (link?: string): void => {
         if (link) {
-            toggleBodyOverflow(false);
+            // toggleBodyOverflow(false);
             setLocation(link);
         }
     };
 
     return (
-        <div
-            className={`fixed pin h-screen z-10 inset-0 overflow-hidden ${!show ? 'hidden' : ''}`}
-            aria-labelledby="modal-title"
-            role="dialog"
-            aria-modal="true"
-        >
-            {/* sm:block sm:p-0 */}
-            <div className="flex items-end xs:items-center justify-center min-h-screen h-full pt-4">
-                <div
-                    className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-                    aria-hidden="true"
-                    onClick={onClose}
-                />
-                <span
-                    className="hidden sm:inline-block sm:align-middle sm:h-screen"
-                    aria-hidden="true"
+        <Backdrop show={show} onClose={onClose}>
+            <DatePicker selectedDay={selectedDay} setSelectedDay={onDateSelect} />
+            <div className="bg-gray-50 px-4 xs:pb-3 pb-6 w-full">
+                <button
+                    type="button"
+                    className="block w-full rounded-md shadow border border-transparent bg-gold-base px-4 py-2 text-base font-medium text-brown-dark focus:outline-none"
+                    onClick={() => onButtonClick(buttonData.primaryButtonLink)}
                 >
-                    &#8203;
-                </span>
-
-                <div className="bg-white rounded-t-md xs:rounded-md text-left overflow-hidden transform transition-all w-full xs:w-auto z-20">
-                    <DatePicker selectedDay={selectedDay} setSelectedDay={onDateSelect} />
-                    <div className="bg-gray-50 px-4 xs:pb-3 pb-6 w-full">
-                        <button
-                            type="button"
-                            className="block w-full rounded-md shadow border border-transparent bg-gold-base px-4 py-2 text-base font-medium text-brown-dark focus:outline-none"
-                            onClick={() => onButtonClick(buttonData.primaryButtonLink)}
-                        >
-                            {buttonData.primaryButtonText}
-                        </button>
-                        <button
-                            type="button"
-                            className="mt-3 w-full rounded-md shadow border border-transparent bg-gray-200 px-4 py-2 text-base font-medium text-brown-dark focus:outline-none"
-                            onClick={() => onButtonClick(buttonData.secondaryButtonLink)}
-                        >
-                            {buttonData.secondaryButtonText}
-                        </button>
-                    </div>
-                </div>
+                    {buttonData.primaryButtonText}
+                </button>
+                <button
+                    type="button"
+                    className="mt-3 w-full rounded-md shadow border border-transparent bg-gray-200 px-4 py-2 text-base font-medium text-brown-dark focus:outline-none"
+                    onClick={() => onButtonClick(buttonData.secondaryButtonLink)}
+                >
+                    {buttonData.secondaryButtonText}
+                </button>
             </div>
-        </div>
+        </Backdrop>
     );
 };

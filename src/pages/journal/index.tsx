@@ -97,18 +97,25 @@ export const Journal = (): JSX.Element => {
                 <SectionQuote
                     quote="Here you're come to cont the blessings not regretting anything or feeling sad for."
                     changeStage={changeStage}
-                    eveningProgressPercentage={eveningProgressPercentage}
-                    morningProgressPercentage={morningProgressPercentage}
-                    progressPercentage={progressPercentage}
+                    progressPercentage={
+                        info.phase === 'complete'
+                            ? progressPercentage[info.stage]
+                            : info.phase === 'morning'
+                            ? morningProgressPercentage[info.stage]
+                            : eveningProgressPercentage[info.stage]
+                    }
                     onCloseClick={onCloseClick}
-                    phase={info.phase}
                     stage={info.stage}
                 />
             ) : (
                 <Notepad
-                    eveningProgressPercentage={eveningProgressPercentage}
-                    morningProgressPercentage={morningProgressPercentage}
-                    progressPercentage={progressPercentage}
+                    progressPercentage={
+                        info.phase === 'complete'
+                            ? progressPercentage[info.stage]
+                            : info.phase === 'morning'
+                            ? morningProgressPercentage[info.stage]
+                            : eveningProgressPercentage[info.stage]
+                    }
                     onCloseClick={onCloseClick}
                     phase={info.phase}
                     stage={info.stage}

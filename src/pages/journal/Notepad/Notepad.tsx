@@ -1,4 +1,5 @@
 import React, { useState, createRef, useEffect } from 'react';
+import { isLastStage } from '../../../shared/helper';
 import { FixedBottomContainer } from '../FixedBottomContainer/FixedBottomContainer';
 import { IconButton } from '../IconButton/IconButton';
 import { JournalHeader } from '../JournalHeader/JournalHeader';
@@ -29,9 +30,7 @@ interface NotepadProps {
     setContent: (content: Record<number, string>) => void;
     content: Record<number, string>;
     final: (content: Record<number, string>) => void;
-    progressPercentage: number[];
-    eveningProgressPercentage: number[];
-    morningProgressPercentage: number[];
+    progressPercentage: number;
     onCloseClick: () => void;
 }
 
@@ -43,8 +42,6 @@ export const Notepad: React.FC<NotepadProps> = ({
     content,
     final,
     progressPercentage,
-    morningProgressPercentage,
-    eveningProgressPercentage,
     onCloseClick,
 }) => {
     const [listText, setListText] = useState<string>('<li>Dummy Demo content.</li>');
@@ -63,7 +60,7 @@ export const Notepad: React.FC<NotepadProps> = ({
     }, [content, stage]);
 
     const handleStageChange = (isNext = true): void => {
-        if (isNext && isLastStage()) {
+        if (isNext && isLastStage(stage, phase)) {
             const newContent = { ...content };
             newContent[stage] = paraRef.current!.innerText.toString();
             setContent(newContent);
@@ -89,12 +86,7 @@ export const Notepad: React.FC<NotepadProps> = ({
             changeStage(nextStage);
         }
     };
-    const isLastStage = (): boolean => {
-        if (stage === 5 && phase === 'complete') return true;
-        if (stage === 3 && phase === 'morning') return true;
-        if (stage === 5 && phase === 'evening') return true;
-        return false;
-    };
+
     return (
         <>
             <JournalHeader
@@ -102,13 +94,7 @@ export const Notepad: React.FC<NotepadProps> = ({
                 changeStage={() => handleStageChange(false)}
                 close={onCloseClick}
                 backButtonDisabled={phase === 'evening' && stage === 4}
-                progress={
-                    phase === 'complete'
-                        ? progressPercentage
-                        : phase === 'evening'
-                        ? eveningProgressPercentage
-                        : morningProgressPercentage
-                }
+                progressPercentage={progressPercentage}
             />
 
             <div className="rounded-lg bg-white shadow-sm px-3 py-4 mx-2 relative border-none caret">
@@ -127,12 +113,12 @@ export const Notepad: React.FC<NotepadProps> = ({
             </div>
 
             <FixedBottomContainer>
-                <IconButton icon={['fas', 'image']} className="mr-2" />
-                <IconButton icon={['fas', 'ellipsis-h']} />
+                {/* <IconButton icon={['fas', 'image']} className="mr-2" />
+                <IconButton icon={['fas', 'ellipsis-h']} /> */}
                 <IconButton
                     className="float-right"
                     onClick={() => handleStageChange(true)}
-                    icon={['fas', isLastStage() ? 'check' : 'arrow-right']}
+                    icon={['fas', isLastStage(stage, phase) ? 'check' : 'arrow-right']}
                 />
             </FixedBottomContainer>
         </>

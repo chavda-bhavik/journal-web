@@ -143,3 +143,10 @@ export const groupJournals = (journals: FormattedJournalType[]): GroupedJournals
 export const isProduction = process.env.NODE_ENV === 'production';
 
 export const isOnline = window.navigator.onLine;
+
+export const isLastStage = (stage: number, phase: string): boolean => {
+    if (stage === 5 && phase === 'complete') return true;
+    if (stage === 3 && phase === 'morning') return true;
+    if (stage === 5 && phase === 'evening') return true;
+    return false;
+};
