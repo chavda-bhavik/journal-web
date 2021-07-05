@@ -66,28 +66,26 @@ const JournalMutation = gql`
         }
     }
 `;
+const DeleteJournalMutation = gql`
+    mutation DeleteJournal($id: String, $date: DateTime) {
+        deleteJournal(id: $id, date: $date) {
+            id
+            actions
+            greatfullness
+            affirmation
+            highlights
+            improvements
+            date
+            status
+        }
+    }
+`;
 
 export const fetchJournals = () => async (dispatch: AppDispatch) => {
     try {
         dispatch(loading());
         let result = await client.request(JournalsQuery);
-        let formattedJournals = formatJournals(result.getAllJournals);
-        let todaysJournal = getTodaysJournal(result.getAllJournals);
-        let groupedJournals = groupJournals(formattedJournals);
-        dispatch(
-            journals({
-                journals: result.getAllJournals,
-                formattedJournals: formattedJournals,
-                todaysJournal: todaysJournal,
-                groupedJournals: groupedJournals,
-                stats: {
-                    months: Object.keys(groupedJournals).length,
-                    total: formattedJournals.length,
-                    weeks: 10,
-                },
-                fetched: true,
-            }),
-        );
+        setJournals(result.getAllJournals, dispatch, true);
     } catch (err) {
         dispatch(error(err.message));
     }
@@ -145,24 +143,26 @@ export const makeJournal =
                 (jour1, jour2) => Number(jour1.date) - Number(jour2.date),
             );
         }
-        let formattedJournals = formatJournals(newJournals);
-        let todaysJournal = getTodaysJournal(newJournals);
-        let groupedJournals = groupJournals(formattedJournals);
+        setJournals(newJournals, dispatch);
         dispatch(
             journal({
                 journal: journalToBeUpdated,
-                journals: newJournals,
-                formattedJournals: formattedJournals,
-                groupedJournals: groupedJournals,
-                stats: {
-                    months: Object.keys(groupedJournals).length,
-                    total: formattedJournals.length,
-                    weeks: 10,
-                },
-                todaysJournal: todaysJournal,
             }),
         );
     };
+
+export const deleteJournal = (id: string, journals: Journal[]) => async (dispatch: AppDispatch) => {
+    try {
+        dispatch(loading());
+        await client.request(DeleteJournalMutation, {
+            id,
+        });
+    } catch (err) {
+        dispatch(error(err.message));
+    }
+    let newJournals = journals.filter((jour) => jour.id !== id);
+    setJournals(newJournals, dispatch);
+};
 
 export const clearJournal = () => (dispatch: AppDispatch) => {
     dispatch(resetJournal());
@@ -197,6 +197,26 @@ export const resetJournals = (journals: Journal[]) => (dispatch: AppDispatch) =>
             formattedJournals,
             groupedJournals,
             searched: false,
+        }),
+    );
+};
+
+const setJournals = (journalsData: Journal[], dispatch: AppDispatch, fetched?: boolean) => {
+    let formattedJournals = formatJournals(journalsData);
+    let todaysJournal = getTodaysJournal(journalsData);
+    let groupedJournals = groupJournals(formattedJournals);
+    dispatch(
+        journals({
+            journals: journalsData,
+            formattedJournals: formattedJournals,
+            groupedJournals: groupedJournals,
+            stats: {
+                months: Object.keys(groupedJournals).length,
+                total: formattedJournals.length,
+                weeks: 10,
+            },
+            todaysJournal: todaysJournal,
+            fetched,
         }),
     );
 };

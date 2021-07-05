@@ -21,7 +21,7 @@ export const FixedButton: React.FC<FixedButtonProps> = ({
             disabled={disabled}
             onClick={onClick}
         >
-            <FontAwesomeIcon icon={icon} className="text-brown-dark" size="lg" />
+            <FontAwesomeIcon icon={icon} size="lg" />
         </button>
     );
 };

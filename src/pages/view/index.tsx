@@ -4,8 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from '../../shared/components/Button';
 import { Note } from './Note';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { getSingleJournal } from '../../store/journal/Actions';
+import { getSingleJournal, deleteJournal } from '../../store/journal/Actions';
 import { useLocation } from 'wouter';
+import { FixedButton } from '../../shared/components/FixedButton';
 
 interface ViewProps {
     params: {
@@ -27,15 +28,24 @@ export const view: React.FC<ViewProps> = (props) => {
         setLocation(`/journal?page=${i}&rid=${props.params.id}`);
     };
 
+    const deleteHandler = async () => {
+        dispatch(deleteJournal(props.params.id, JournalState.journals));
+        setLocation('/');
+    };
+
     const onBackClick = () => {
         setLocation('/');
     };
 
     let DeleteButton = null;
     if (!edit) {
-        <span className="fixed bottom-5 right-5 float-right px-3 py-2 rounded-full bg-white text-red-500 shadow-md">
-            <FontAwesomeIcon icon={['fas', 'trash-alt']} />
-        </span>;
+        DeleteButton = (
+            <FixedButton
+                icon={['fas', 'trash-alt']}
+                className="bottom-5 right-5 bg-white text-red-500"
+                onClick={deleteHandler}
+            />
+        );
     }
 
     return (

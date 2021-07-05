@@ -46,7 +46,7 @@ export const home: React.FC<homeProps> = ({}) => {
 
             <FixedButton
                 icon={['fas', 'plus']}
-                className="bottom-2 right-2"
+                className="bottom-2 right-2 text-brown-dark"
                 onClick={() => toggleDateModal(true)}
             />
 

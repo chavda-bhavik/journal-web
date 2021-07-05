@@ -40,10 +40,6 @@ interface JournalSuccessType {
 }
 interface JournalMakeSuccessType {
     journal: Journal;
-    journals?: Journal[];
-    formattedJournals?: FormattedJournalType[];
-    todaysJournal?: FormattedJournalType;
-    groupedJournals?: GroupedJournalsType;
     stats?: stats;
 }
 interface JournalSearchType {
@@ -69,16 +65,7 @@ export const journalSlice = createSlice({
             if (action.payload.fetched) state.fetched = action.payload.fetched;
         },
         journal: (state, action: PayloadAction<JournalMakeSuccessType>) => {
-            // update journals with new journal added/updated
-            // sort them by date
-            // set formatted/todays/grouped journals
             state.journal = action.payload.journal;
-            if (action.payload.formattedJournals)
-                state.formattedJournals = action.payload.formattedJournals;
-            if (action.payload.groupedJournals)
-                state.groupedJournals = action.payload.groupedJournals;
-            if (action.payload.journals) state.journals = action.payload.journals;
-            if (action.payload.stats) state.stats = action.payload.stats;
             state.loading = false;
         },
         resetJournal: (state) => {
