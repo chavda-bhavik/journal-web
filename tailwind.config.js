@@ -3,6 +3,9 @@ module.exports = {
     darkMode: false, // or 'media' or 'class'
     theme: {
         extend: {
+            fontFamily: {
+                highlights: ['"Libre Baskerville"', 'serif'],
+            },
             colors: {
                 white: '#FFFFFF',
                 narvik: {
@@ -24,6 +27,9 @@ module.exports = {
             },
             screens: {
                 xs: '376px',
+            },
+            width: {
+                11: '2.75rem',
             },
         },
     },

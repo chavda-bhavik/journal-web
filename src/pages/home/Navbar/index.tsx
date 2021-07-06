@@ -26,7 +26,7 @@ export const Navbar: React.FC<{}> = () => {
     };
 
     const navContent = (
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center md:py-2">
             <div className="flex-initial items-center">
                 <FontAwesomeIcon icon={['fas', 'calendar-day']} size="lg" />
                 <h3 className="ml-2 inline-block text-xl">Timeline</h3>
@@ -42,12 +42,12 @@ export const Navbar: React.FC<{}> = () => {
     );
 
     const searchContent = (
-        <form className="flex flex-row items-center" onSubmit={onSearch}>
+        <form className="flex flex-row items-center md:py-1" onSubmit={onSearch}>
             <FontAwesomeIcon icon={['fas', 'search']} size="lg" className="mx-1" />
             <input
                 type="text"
                 name="search"
-                className="flex-grow bg-narvik-base border-b-2 border-gold-base mx-2 focus:outline-none"
+                className="w-full bg-narvik-light border-b-2 border-gold-base mx-2 px-1 pt-1 focus:outline-none text-xl"
             />
             <FontAwesomeIcon icon={['fas', 'times']} size="lg" className="mx-1" onClick={onClose} />
         </form>
