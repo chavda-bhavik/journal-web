@@ -63,7 +63,7 @@ export const view: React.FC<ViewProps> = (props) => {
                 />
             </div>
 
-            <div className="mx-3">
+            {/* <div className="mx-3">
                 <img
                     src="https://dummyimage.com/600x400/e9e4eb/000000"
                     alt="journal image"
@@ -71,10 +71,10 @@ export const view: React.FC<ViewProps> = (props) => {
                     height={400}
                     className="rounded-xl w-full"
                 />
-            </div>
+            </div> */}
 
             <div className="px-3 pb-5">
-                <FontAwesomeIcon icon={['fas', 'sun']} className="mt-3" />
+                <FontAwesomeIcon icon={['fas', 'sun']} className="mt-4 mb-2" size="lg" />
 
                 <Note
                     className="mt-3"
@@ -101,7 +101,7 @@ export const view: React.FC<ViewProps> = (props) => {
             </div>
 
             <div className="px-3 pb-5 bg-narvik-base">
-                <FontAwesomeIcon icon={['fas', 'moon']} className="mt-3" />
+                <FontAwesomeIcon icon={['fas', 'moon']} className="mt-4 mb-2" size="lg" />
                 <Note
                     className="mt-3"
                     editing={edit}

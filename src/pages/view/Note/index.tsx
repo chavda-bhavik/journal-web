@@ -29,13 +29,19 @@ export const Note: React.FC<NoteProps> = ({
 
     return (
         <div
-            className={`px-2 py-2 ${editing ? 'rounded-xl bg-white' : ''} ${className} break-all`}
+            className={`px-2 md:px-3 py-2 md:py-3 ${
+                editing ? 'rounded-xl bg-white' : ''
+            } ${className} break-all`}
             onClick={() => editing && onClick()}
             role="button"
             onKeyDown={() => editing && onClick()}
             tabIndex={-1}
         >
-            <p className={`${editing ? 'text-gold-base' : 'text-narvik-medium'} uppercase `}>
+            <p
+                className={`${
+                    editing ? 'text-gold-base' : 'text-narvik-medium'
+                } uppercase font-medium mb-1`}
+            >
                 {title}
             </p>
             {isList ? Note : normalText}
