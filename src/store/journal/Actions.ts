@@ -140,9 +140,10 @@ export const makeJournal =
             // add
             newJournals = [...journals, { ...journalToBeUpdated }];
             newJournals = newJournals.sort(
-                (jour1, jour2) => Number(jour1.date) - Number(jour2.date),
+                (jour1, jour2) => Number(jour2.date) - Number(jour1.date),
             );
         }
+        console.log(newJournals);
         setJournals(newJournals, dispatch);
         dispatch(
             journal({

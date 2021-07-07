@@ -26,7 +26,7 @@ export const SectionQuote: React.FC<SectionQuoteProps> = ({
                 close={onCloseClick}
                 progressPercentage={progressPercentage}
             />
-            <p className="max-w-sm mx-auto text-center mt-40">{quote}</p>
+            <p className="max-w-sm mx-auto text-center mt-40 font-highlights text-lg md:text-2xl leading-7 tracking-wide">{quote}</p>
             <FixedBottomContainer>
                 <IconButton
                     className="float-right"
