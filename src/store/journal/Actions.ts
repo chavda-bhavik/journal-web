@@ -143,7 +143,6 @@ export const makeJournal =
                 (jour1, jour2) => Number(jour2.date) - Number(jour1.date),
             );
         }
-        console.log(newJournals);
         setJournals(newJournals, dispatch);
         dispatch(
             journal({
