@@ -8,6 +8,7 @@ import { TodaysContent } from './TodaysContent';
 import { Quote } from './Quote';
 import { Journals } from './Journals';
 import { FixedButton } from '../../shared/components/FixedButton';
+import { useKeyPress } from '../../shared/hooks/useKeyPress';
 
 interface homeProps {}
 
@@ -15,6 +16,14 @@ export const home: React.FC<homeProps> = ({}) => {
     const JournalState = useAppSelector((state) => state.journal);
     const [showDateModal, setShowDateModal] = useState(false);
     const dispatch = useAppDispatch();
+
+    let newPressed = useKeyPress({ userKeys: ['n'] });
+    let closePressed = useKeyPress({ userKeys: ['Escape'] });
+
+    useEffect(() => {
+        if (newPressed && !showDateModal) toggleDateModal(true);
+        if (closePressed && showDateModal) toggleDateModal(false);
+    }, [newPressed, showDateModal, closePressed]);
 
     useEffect(() => {
         if (window.navigator.onLine) dispatch(fetchJournals());

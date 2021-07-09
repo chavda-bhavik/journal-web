@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../store';
 import { getSingleJournal, deleteJournal } from '../../store/journal/Actions';
 import { useLocation } from 'wouter';
 import { FixedButton } from '../../shared/components/FixedButton';
+import { useKeyPress } from '../../shared/hooks/useKeyPress';
 
 interface ViewProps {
     params: {
@@ -19,6 +20,20 @@ export const view: React.FC<ViewProps> = (props) => {
     const [edit, setEdit] = useState<boolean>(false);
     const JournalState = useAppSelector((state) => state.journal);
     const dispatch = useAppDispatch();
+
+    // keyPress hooks
+    const editPressed = useKeyPress({ userKeys: ['e'] });
+    let closePressed = useKeyPress({ userKeys: ['Escape'] });
+    let deletePressed = useKeyPress({ userKeys: ['Delete'] });
+    // keyPress listener useEffect call
+    useEffect(() => {
+        // if edit(e) clicked and journal is not in edit state
+        if (!edit && editPressed) setEdit(true);
+        // if close(escape) is pressed
+        if (closePressed) onBackClick();
+        // if delete is pressed
+        if (deletePressed) deleteHandler();
+    }, [editPressed, edit, closePressed, deletePressed]);
 
     useEffect(() => {
         dispatch(getSingleJournal(props.params.id, JournalState.journals, JournalState.fetched));

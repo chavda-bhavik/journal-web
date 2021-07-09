@@ -1,5 +1,6 @@
 import React, { useState, createRef, useEffect } from 'react';
 import { isLastStage } from '../../../shared/helper';
+import { useKeyPress } from '../../../shared/hooks/useKeyPress';
 import { FixedBottomContainer } from '../FixedBottomContainer/FixedBottomContainer';
 import { IconButton } from '../IconButton/IconButton';
 import { JournalHeader } from '../JournalHeader/JournalHeader';
@@ -50,6 +51,16 @@ export const Notepad: React.FC<NotepadProps> = ({
     const listRef = createRef<HTMLOListElement>();
     const paraRef = createRef<HTMLParagraphElement>();
     const isTextStage = (stg: number): boolean => stg === 3 || stg === 5;
+
+    let leftKeyPressed = useKeyPress({ userKeys: ['Control', 'ArrowLeft'] });
+    let rightKeyPressed = useKeyPress({ userKeys: ['Control', 'ArrowRight'] });
+    let closePressed = useKeyPress({ userKeys: ['Escape'] });
+
+    useEffect(() => {
+        if (leftKeyPressed) handleStageChange(false);
+        if (rightKeyPressed) handleStageChange(true);
+        if (closePressed) onCloseClick();
+    }, [leftKeyPressed, rightKeyPressed, closePressed]);
 
     useEffect(() => {
         if (isTextStage(stage)) {

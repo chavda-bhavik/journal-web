@@ -1,6 +1,6 @@
+import React, { LegacyRef, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
-import { useState } from 'react';
+import { useKeyPress } from '../../../shared/hooks/useKeyPress';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import { resetJournals, searchJournals } from '../../../store/journal/Actions';
 
@@ -8,6 +8,21 @@ export const Navbar: React.FC<{}> = () => {
     const [showSearch, setShowSearch] = useState(false);
     const journals = useAppSelector((state) => state.journal.journals);
     const dispatch = useAppDispatch();
+    const searchRef = React.useRef() as React.MutableRefObject<HTMLInputElement>;
+
+    const searchPressed = useKeyPress({ userKeys: ['s'] });
+    let closePressed = useKeyPress({ userKeys: ['Escape'] });
+
+    // useEffetch that set/close search
+    useEffect(() => {
+        if (searchPressed && !showSearch) setShowSearch(true);
+        if (closePressed && showSearch) onClose();
+    }, [searchPressed, showSearch, closePressed]);
+
+    // useEffect that set focus to search input
+    useEffect(() => {
+        if (showSearch) searchRef.current.focus();
+    }, [showSearch]);
 
     const onSearch = (e: React.SyntheticEvent) => {
         e.preventDefault();
@@ -45,6 +60,7 @@ export const Navbar: React.FC<{}> = () => {
         <form className="flex flex-row items-center md:py-1" onSubmit={onSearch}>
             <FontAwesomeIcon icon={['fas', 'search']} size="lg" className="mx-1" />
             <input
+                ref={searchRef}
                 type="text"
                 name="search"
                 className="w-full bg-narvik-light border-b-2 border-gold-base mx-2 px-1 pt-1 focus:outline-none text-xl"

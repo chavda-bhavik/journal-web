@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useKeyPress } from '../../../shared/hooks/useKeyPress';
 import { FixedBottomContainer } from '../FixedBottomContainer/FixedBottomContainer';
 import { IconButton } from '../IconButton/IconButton';
 import { JournalHeader } from '../JournalHeader/JournalHeader';
@@ -18,6 +19,14 @@ export const SectionQuote: React.FC<SectionQuoteProps> = ({
     onCloseClick,
     progressPercentage,
 }) => {
+    let rightKeyPressed = useKeyPress({ userKeys: ['Control', 'ArrowRight'] });
+    let closePressed = useKeyPress({ userKeys: ['Escape'] });
+
+    useEffect(() => {
+        if (rightKeyPressed) changeStage(1);
+        if (closePressed) onCloseClick();
+    }, [rightKeyPressed, closePressed]);
+
     return (
         <>
             <JournalHeader
@@ -26,7 +35,9 @@ export const SectionQuote: React.FC<SectionQuoteProps> = ({
                 close={onCloseClick}
                 progressPercentage={progressPercentage}
             />
-            <p className="max-w-sm mx-auto text-center mt-40 font-highlights text-lg md:text-2xl leading-7 tracking-wide">{quote}</p>
+            <p className="max-w-sm mx-auto text-center mt-40 font-highlights text-lg md:text-2xl leading-7 tracking-wide">
+                {quote}
+            </p>
             <FixedBottomContainer>
                 <IconButton
                     className="float-right"
