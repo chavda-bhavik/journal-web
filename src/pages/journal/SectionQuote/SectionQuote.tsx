@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useKeyPress } from '../../../shared/hooks/useKeyPress';
-import { IconButton } from '../IconButton/IconButton';
+import { IconButton } from '../../../shared/components/IconButton/IconButton';
 import { JournalHeader } from '../JournalHeader/JournalHeader';
 
 interface SectionQuoteProps {

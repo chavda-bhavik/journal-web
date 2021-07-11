@@ -7,6 +7,7 @@ import { useAppSelector } from '../../store';
 import { Title } from '../home/Title';
 import { Button } from '../../shared/components/Button';
 import { ImageModal } from '../../shared/components/ImageModal';
+import { IconButton } from '../../shared/components/IconButton/IconButton';
 
 interface GallaryProps {}
 
@@ -29,13 +30,19 @@ export const Gallary: React.FC<GallaryProps> = ({}) => {
     }
 
     return (
-        <div className="bg-narvik-light min-h-screen h-full max-w-lg border-2 p-2">
-            <button
+        <div className="container p-2">
+            <IconButton
+                icon={['fas', 'arrow-left']}
+                onClick={onBackClick}
+                shadow="none"
+                variant="narvik"
+            />
+            {/* <button
                 className="rounded-md px-3 py-2 focus:outline-none shadow-lg bg-narvik-medium"
                 onClick={onBackClick}
             >
                 <FontAwesomeIcon icon={['fas', 'arrow-left']} />
-            </button>
+            </button> */}
             <Title title="Gallary" className="font-highlights my-3" />
             <div className="grid grid-cols-3 gap-2">
                 {JournalsState.formattedJournals.reduce((journals: any[], journal) => {

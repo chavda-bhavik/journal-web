@@ -7,10 +7,10 @@ import { Navbar } from './Navbar';
 import { TodaysContent } from './TodaysContent';
 import { Quote } from './Quote';
 import { Journals } from './Journals';
-import { FixedButton } from '../../shared/components/FixedButton';
 import { useKeyPress } from '../../shared/hooks/useKeyPress';
 import { Button } from '../../shared/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { BottomSticky } from '../../shared/components/BottomSticky';
 
 interface homeProps {}
 
@@ -36,7 +36,7 @@ export const home: React.FC<homeProps> = ({}) => {
     };
 
     return (
-        <div className={`bg-narvik-light border-2 min-h-screen space-y-3 max-w-lg relative`}>
+        <div className={`container space-y-3 relative`}>
             <div className=" py-2 px-3">
                 <Navbar />
 
@@ -56,7 +56,7 @@ export const home: React.FC<homeProps> = ({}) => {
             <Journals journals={JournalState.groupedJournals} />
 
             {JournalState.searched !== true && (
-                <div className="sticky bottom-0 bg-narvik-light w-full p-2 shadow-2xl">
+                <BottomSticky>
                     <Button
                         active={true}
                         className="w-full font-normal text-base"
@@ -64,13 +64,8 @@ export const home: React.FC<homeProps> = ({}) => {
                     >
                         <FontAwesomeIcon icon={['fas', 'plus']} /> Add Journal
                     </Button>
-                </div>
+                </BottomSticky>
             )}
-            {/* <FixedButton
-                icon={['fas', 'plus']}
-                className="bottom-2 right-2 text-brown-dark"
-                onClick={() => toggleDateModal(true)}
-            /> */}
 
             <DateModal
                 journals={JournalState.formattedJournals}

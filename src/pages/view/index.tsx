@@ -6,9 +6,9 @@ import { Note } from './Note';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { getSingleJournal, deleteJournal } from '../../store/journal/Actions';
 import { useLocation } from 'wouter';
-import { FixedButton } from '../../shared/components/FixedButton';
 import { useKeyPress } from '../../shared/hooks/useKeyPress';
 import { ImageModal } from '../../shared/components/ImageModal';
+import { BottomSticky } from '../../shared/components/BottomSticky';
 
 interface ViewProps {
     params: {
@@ -56,8 +56,9 @@ export const view: React.FC<ViewProps> = (props) => {
 
     let DeleteButton = null;
     if (!edit) {
+        // sticky bottom-0 bg-narvik-light w-full p-2 shadow-2xl
         DeleteButton = (
-            <div className="sticky bottom-0 bg-narvik-light w-full p-2 shadow-2xl">
+            <BottomSticky>
                 <Button
                     className="w-full font-normal text-base text-white"
                     danger={true}
@@ -65,7 +66,7 @@ export const view: React.FC<ViewProps> = (props) => {
                 >
                     <FontAwesomeIcon icon={['fas', 'trash-alt']} /> Delete Journal
                 </Button>
-            </div>
+            </BottomSticky>
         );
     }
 
@@ -97,9 +98,9 @@ export const view: React.FC<ViewProps> = (props) => {
     }
 
     return (
-        <div className="bg-narvik-light min-h-screen max-w-lg border-2">
+        <div className="container">
             <div className="flex flex-row py-3 justify-between items-center px-3">
-                <Button onClick={onBackClick}>
+                <Button onClick={onBackClick} className="border-2">
                     <FontAwesomeIcon icon={['fas', 'arrow-left']} />
                 </Button>
                 {/* <IconButton icon={['fas', 'arrow-left']} onClick={goBack} /> */}
@@ -108,6 +109,7 @@ export const view: React.FC<ViewProps> = (props) => {
                     text={edit ? 'Done' : 'Edit'}
                     onClick={() => setEdit(!edit)}
                     active={edit}
+                    className="border-2"
                 />
             </div>
 

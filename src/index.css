@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @layer components {
-    .btn {
-        @apply;
+@layer components {
+    .container {
+        @apply bg-narvik-light min-h-screen h-full max-w-lg border-2 rounded-sm border-brown-dark;
     }
-} */
+}

@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
+import { IconButton } from '../../../shared/components/IconButton/IconButton';
 
 interface JournalHeaderProps {
     stage: number;
@@ -19,17 +20,13 @@ export const JournalHeader: React.FC<JournalHeaderProps> = ({
     return (
         <div className="flex flex-row py-3 justify-between items-center px-3">
             {stage > 0 && (
-                <button
-                    className="rounded-full px-3 py-2 focus:outline-none bg-narvik-base"
-                    disabled={backButtonDisabled}
+                <IconButton
+                    icon={['fas', 'arrow-left']}
+                    variant="narvik"
+                    shadow="none"
                     onClick={() => changeStage(stage - 1)}
-                >
-                    <FontAwesomeIcon
-                        icon={['fas', 'arrow-left']}
-                        className="text-brown-light"
-                        size="lg"
-                    />
-                </button>
+                    disabled={backButtonDisabled}
+                />
             )}
             <div className="w-full mx-2 bg-narvik-base">
                 <div
@@ -37,12 +34,7 @@ export const JournalHeader: React.FC<JournalHeaderProps> = ({
                     style={{ width: progressPercentage + '%' }}
                 />
             </div>
-            <button
-                className="rounded-full px-3 py-2 focus:outline-none bg-narvik-base"
-                onClick={close}
-            >
-                <FontAwesomeIcon icon={['fas', 'times']} className="text-brown-light" size="lg" />
-            </button>
+            <IconButton icon={['fas', 'times']} variant="narvik" onClick={close} shadow="none" />
         </div>
     );
 };

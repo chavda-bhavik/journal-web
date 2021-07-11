@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useEffect } from 'react';
-import { IconButton } from '../../../pages/journal/IconButton/IconButton';
+import { IconButton } from '../IconButton/IconButton';
 
 interface BackdropProps {
     show: boolean;
@@ -43,7 +43,7 @@ export const Backdrop: React.FC<BackdropProps> = ({
                 <IconButton
                     icon={['fas', 'times']}
                     className="z-30 absolute top-4 right-4"
-                    size="1x"
+                    variant="narvik"
                     onClick={onClose}
                 />
                 <div
