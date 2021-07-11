@@ -22,6 +22,13 @@ export const Gallary: React.FC<GallaryProps> = ({}) => {
     const goToJournal = () => {
         if(journal) setLocation(`/view/${journal.id}`);
     }
+
+    let imageSrc = "";
+    if(journal) {
+        if(typeof journal.image === "string") imageSrc = journal.image;
+        else if(journal.image?.name) imageSrc = URL.createObjectURL(journal.image)
+    }
+
     return (
         <div className="bg-narvik-light min-h-screen h-full p-2">
             <button
@@ -52,7 +59,7 @@ export const Gallary: React.FC<GallaryProps> = ({}) => {
             </div>
 
 
-            <ImageModal show={!!journal} image={journal?.image!} onClose={() => setJournal(undefined)} >
+            <ImageModal show={!!journal} imageSrc={imageSrc} onClose={() => setJournal(undefined)} >
                 <div className="flex flex-row justify-between content-center p-2">
                     <span className="text-white font-normal text-2xl">{dayjs(Number(journal?.date)).format('D MMMM')}</span>
                     <Button active={true} onClick={goToJournal}>Go To Journal</Button>

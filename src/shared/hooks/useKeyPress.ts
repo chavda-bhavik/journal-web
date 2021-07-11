@@ -12,8 +12,8 @@ export function useKeyPress(options) {
     const ref = options.ref || window;
 
     // React hooks.
-    const [keyPress, setKeyPress] = useState(false);
-    const [anyKeyPressed, setAnyKeyPressed] = useState([]); // new with arrays
+    const [keyPress, setKeyPress] = useState<any>(false);
+    const [anyKeyPressed, setAnyKeyPressed] = useState<any>([]); // new with arrays
 
     // A reference to determine if a key has been pressed already.
     const prevKey = useRef('');
@@ -27,7 +27,7 @@ export function useKeyPress(options) {
         output: null,
     };
 
-    const setData = (settings) => {
+    const setData = (settings:any) => {
         // Check that we have a 'userKey'  property
         if (userKeys) {
             // Check if the Object is a string, if so add the 'singleKey' properties to
@@ -42,6 +42,7 @@ export function useKeyPress(options) {
             // Check if the Object is an array, if so add the 'multiKeys' properties to
             // 'option' object.
             if (Array.isArray(userKeys)) {
+                // @ts-ignore
                 settings.output = areKeysPressed(userKeys, anyKeyPressed);
                 settings.downHandler = downMultiHandler;
                 settings.upHandler = upMultiHandler;
@@ -62,7 +63,7 @@ export function useKeyPress(options) {
         return settings;
     };
 
-    const downHandler = ({ key }) => {
+    const downHandler = ({ key }:any) => {
         // Escape this function if these two values match
         // (proof the key has already been pressed).
         if (prevKey.current === userKeys) return;
@@ -73,7 +74,7 @@ export function useKeyPress(options) {
         }
     };
 
-    const upHandler = ({ key }) => {
+    const upHandler = ({ key }:any) => {
         if (key === userKeys) {
             setKeyPress(false);
             // reset the value of prevKey
@@ -81,18 +82,18 @@ export function useKeyPress(options) {
         }
     };
 
-    const downMultiHandler = ({ key, repeat }) => {
+    const downMultiHandler = ({ key, repeat }:any) => {
         // NOTE: prevents double key entry in array
         if (repeat) return;
 
-        setAnyKeyPressed((prevState) => [...prevState, key]);
+        setAnyKeyPressed((prevState:any) => [...prevState, key]);
     };
 
-    const upMultiHandler = ({ key }) => {
+    const upMultiHandler = ({ key }:any) => {
         // NOTE: Needed to call on set state again due to how state works.
         // Otherwise would need for the function to dismount and remount which is not wanted.
-        setAnyKeyPressed((prevState) => [...prevState]);
-        setAnyKeyPressed((prevState) => [...prevState.filter((item) => item !== key)]);
+        setAnyKeyPressed((prevState:any) => [...prevState]);
+        setAnyKeyPressed((prevState:any) => [...prevState.filter((item:any) => item !== key)]);
     };
 
     const areKeysPressed = (keys = [], Pressed = []) => {
@@ -149,6 +150,7 @@ export function useKeyPress(options) {
     /**
      * Initialise the event listeners
      */
+    //@ts-ignore
     settings.useEffect();
 
     /**

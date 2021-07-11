@@ -20,7 +20,7 @@ export const view: React.FC<ViewProps> = (props) => {
     const [, setLocation] = useLocation();
     const [edit, setEdit] = useState<boolean>(false);
     const [showImage, setShowImage] = useState<boolean>(false);
-    const JournalState = useAppSelector((state) => state.journal);
+    const { journals, journal, fetched } = useAppSelector((state) => state.journal);
     const dispatch = useAppDispatch();
 
     // keyPress hooks
@@ -38,7 +38,7 @@ export const view: React.FC<ViewProps> = (props) => {
     }, [editPressed, edit, closePressed, deletePressed]);
 
     useEffect(() => {
-        dispatch(getSingleJournal(props.params.id, JournalState.journals, JournalState.fetched));
+        dispatch(getSingleJournal(props.params.id, journals, fetched));
     }, []);
 
     const onClick = (i: number): void => {
@@ -46,7 +46,7 @@ export const view: React.FC<ViewProps> = (props) => {
     };
 
     const deleteHandler = async () => {
-        dispatch(deleteJournal(props.params.id, JournalState.journals));
+        dispatch(deleteJournal(props.params.id, journals));
         setLocation('/');
     };
 
@@ -66,20 +66,30 @@ export const view: React.FC<ViewProps> = (props) => {
     }
 
     let image = null;
-    if(JournalState.journal?.image) {
-        if(typeof JournalState.journal.image === "string") {
-            image = <img
-                src={`data:image/png;base64,${JournalState.journal.image}`}
-                alt="journal image"
-                className="rounded-xl object-cover object-center max-h-80 md:max-h-96 w-full border-2"
-            />
-        } else if(JournalState.journal.image.name) {
-            image = <img
-                src={URL.createObjectURL(JournalState.journal.image)}
-                alt="journal image"
-                className="rounded-xl object-cover object-center max-h-80 md:max-h-96 w-full border-2"
-            />
+    if (journal?.image) {
+        if (typeof journal.image === 'string') {
+            image = (
+                <img
+                    src={`data:image/png;base64,${journal.image}`}
+                    alt="journal image"
+                    className="rounded-xl object-cover object-center max-h-80 md:max-h-96 w-full border-2"
+                />
+            );
+        } else if (journal.image.name) {
+            image = (
+                <img
+                    src={URL.createObjectURL(journal.image)}
+                    alt="journal image"
+                    className="rounded-xl object-cover object-center max-h-80 md:max-h-96 w-full border-2"
+                />
+            );
         }
+    }
+
+    let imageSrc = '';
+    if (journal) {
+        if (typeof journal.image === 'string') imageSrc = journal.image;
+        else if (journal.image?.name) imageSrc = URL.createObjectURL(journal.image);
     }
 
     return (
@@ -97,7 +107,7 @@ export const view: React.FC<ViewProps> = (props) => {
                 />
             </div>
 
-            {(JournalState.journal?.image && image) && (
+            {journal?.image && image && (
                 <div className="mx-3" onClick={() => setShowImage(true)}>
                     {image}
                 </div>
@@ -110,21 +120,21 @@ export const view: React.FC<ViewProps> = (props) => {
                     className="mt-3"
                     editing={edit}
                     title="3 things I am greateful for..."
-                    text={JournalState.journal?.greatfullness}
+                    text={journal?.greatfullness}
                     onClick={() => onClick(1)}
                 />
                 <Note
                     className="mt-7"
                     editing={edit}
                     title="WHAT WILL I DO TO MAKE TODAY GREAT?"
-                    text={JournalState.journal?.actions}
+                    text={journal?.actions}
                     onClick={() => onClick(2)}
                 />
                 <Note
                     className="mt-7"
                     editing={edit}
                     title="DAILY AFFIRMATION"
-                    text={JournalState.journal?.affirmation}
+                    text={journal?.affirmation}
                     isList={false}
                     onClick={() => onClick(3)}
                 />
@@ -136,22 +146,25 @@ export const view: React.FC<ViewProps> = (props) => {
                     className="mt-3"
                     editing={edit}
                     title="Highlights of the day"
-                    text={JournalState.journal?.highlights}
+                    text={journal?.highlights}
                     onClick={() => onClick(4)}
                 />
                 <Note
                     className="mt-7"
                     editing={edit}
                     title="Things that can be improved"
-                    text={JournalState.journal?.improvements}
+                    text={journal?.improvements}
                     isList={false}
                     onClick={() => onClick(5)}
                 />
             </div>
-            {
-                (showImage && typeof JournalState.journal?.image === "string") &&
-                <ImageModal show={showImage} image={ JournalState.journal?.image!} onClose={() => setShowImage(false)} />
-            }
+            {showImage && imageSrc && (
+                <ImageModal
+                    show={showImage}
+                    imageSrc={imageSrc}
+                    onClose={() => setShowImage(false)}
+                />
+            )}
             {DeleteButton}
         </div>
     );
