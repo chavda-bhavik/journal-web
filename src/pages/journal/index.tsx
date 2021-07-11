@@ -69,7 +69,7 @@ export const Journal = (): JSX.Element => {
         setLocation('/');
     };
 
-    const final = async (finalContent: Record<number, string>): Promise<void> => {
+    const final = async (finalContent: Record<number, string>, image?: File): Promise<void> => {
         let date = new Date().getTime();
         if (JournalState.journal && query.rid) {
             date = Number(JournalState.journal.date);
@@ -84,7 +84,7 @@ export const Journal = (): JSX.Element => {
         if (!query.rid) final.id = uuid();
         else final.id = query.rid;
         try {
-            dispatch(makeJournal(final, JournalState.journals, date));
+            dispatch(makeJournal(final, JournalState.journals, date, image));
             setLocation('/');
         } catch (err) {
             console.log(err);

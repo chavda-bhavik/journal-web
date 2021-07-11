@@ -30,7 +30,7 @@ interface NotepadProps {
     phase: 'complete' | 'morning' | 'evening';
     setContent: (content: Record<number, string>) => void;
     content: Record<number, string>;
-    final: (content: Record<number, string>) => void;
+    final: (content: Record<number, string>, image?: File) => void;
     progressPercentage: number;
     onCloseClick: () => void;
 }
@@ -47,6 +47,7 @@ export const Notepad: React.FC<NotepadProps> = ({
 }) => {
     const [listText, setListText] = useState<string>('<li>Dummy Demo content.</li>');
     const [paraText, setParaText] = useState<string>('');
+    const [file, setFile] = useState<File>();
 
     const listRef = createRef<HTMLOListElement>();
     const paraRef = createRef<HTMLParagraphElement>();
@@ -75,7 +76,7 @@ export const Notepad: React.FC<NotepadProps> = ({
             const newContent = { ...content };
             newContent[stage] = paraRef.current!.innerText.toString();
             setContent(newContent);
-            final(newContent);
+            final(newContent, file);
         } else {
             const nextStage = isNext ? stage + 1 : stage - 1;
             const newContent = { ...content };
@@ -95,6 +96,12 @@ export const Notepad: React.FC<NotepadProps> = ({
             }
             setContent(newContent);
             changeStage(nextStage);
+        }
+    };
+
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            setFile(e.target.files[0]);
         }
     };
 
@@ -124,6 +131,7 @@ export const Notepad: React.FC<NotepadProps> = ({
             </div>
 
             <FixedBottomContainer>
+                <input type="file" accept="image/*" capture="camera" onChange={onChange} />
                 {/* <IconButton icon={['fas', 'image']} className="mr-2" />
                 <IconButton icon={['fas', 'ellipsis-h']} /> */}
                 <IconButton

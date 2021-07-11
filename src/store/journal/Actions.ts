@@ -42,6 +42,7 @@ const JournalMutation = gql`
         $highlights: String
         $improvements: String
         $status: Int!
+        $image: Upload
     ) {
         journal(
             values: {
@@ -53,6 +54,7 @@ const JournalMutation = gql`
                 highlights: $highlights
                 improvements: $improvements
                 status: $status
+                image: $image
             }
         ) {
             id
@@ -63,6 +65,7 @@ const JournalMutation = gql`
             improvements
             date
             status
+            image
         }
     }
 `;
@@ -109,14 +112,16 @@ export const getSingleJournal =
     };
 
 export const makeJournal =
-    (journalData: Journal, journals: Journal[], journalDateValue: number) =>
+    (journalData: Journal, journals: Journal[], journalDateValue: number, image?: File) =>
     async (dispatch: AppDispatch) => {
         let journalToBeUpdated = journalData;
         try {
             dispatch(loading());
-            let result = await client.request(JournalMutation, {
+            let finalData: any = {
                 ...journalData,
-            });
+            };
+            if (image) finalData.image = image;
+            let result = await client.request(JournalMutation, finalData);
             // if request gets succeed and response is available
             if (result.journal) journalToBeUpdated = result.journal;
         } catch (err) {
@@ -157,6 +162,8 @@ export const deleteJournal = (id: string, journals: Journal[]) => async (dispatc
         await client.request(DeleteJournalMutation, {
             id,
         });
+        let newJournals = journals.filter((journal) => journal.id !== id);
+        setJournals(newJournals, dispatch);
     } catch (err) {
         dispatch(error(err.message));
     }
