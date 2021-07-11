@@ -118,12 +118,12 @@ export const makeJournal =
     (journalData: Journal, journals: Journal[], journalDateValue: number, image?: File) =>
     async (dispatch: AppDispatch) => {
         let journalToBeUpdated = journalData;
+        if (image) journalToBeUpdated.image = image;
         try {
             dispatch(loading());
             let finalData: any = {
                 ...journalData,
             };
-            if (image) finalData.image = image;
             let result = await client.request(JournalMutation, finalData);
             // if request gets succeed and response is available
             if (result.journal) journalToBeUpdated = result.journal;
@@ -151,6 +151,7 @@ export const makeJournal =
                 (jour1, jour2) => Number(jour2.date) - Number(jour1.date),
             );
         }
+        console.log(newJournals, image);
         setJournals(newJournals, dispatch);
         dispatch(
             journal({

@@ -23,6 +23,22 @@ export const Journal: React.FC<JournalProps> = ({
     onClick = () => {},
     journal,
 }) => {
+    let image = null;
+    if(journal.image) {
+        if(typeof journal.image === "string") {
+            image = <img
+                src={`data:image/png;base64,${journal.image}`}
+                alt="journal image"
+                className="rounded-xl object-cover object-center max-h-52 w-full border-2"
+            />
+        } else if(journal.image.name) {
+            image = <img
+                src={URL.createObjectURL(journal.image)}
+                alt="journal image"
+                className="rounded-xl object-cover object-center max-h-52 w-full border-2"
+            />
+        }
+    }
     return (
         <div
             className="flex gap-4 justify-between my-1 cursor-pointer"
@@ -48,13 +64,7 @@ export const Journal: React.FC<JournalProps> = ({
                 <p className="text-brown-dark break-all text-lg sm:text-xl md:text-2xl font-normal">
                     {journal.text}
                 </p>
-                {journal.image && (
-                    <img
-                        src={`data:image/png;base64,${journal.image}`}
-                        alt="journal image"
-                        className="rounded-xl object-cover object-center max-h-52 w-full border-2"
-                    />
-                )}
+                {image}
             </div>
         </div>
     );

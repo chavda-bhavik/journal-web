@@ -65,6 +65,23 @@ export const view: React.FC<ViewProps> = (props) => {
         );
     }
 
+    let image = null;
+    if(JournalState.journal?.image) {
+        if(typeof JournalState.journal.image === "string") {
+            image = <img
+                src={`data:image/png;base64,${JournalState.journal.image}`}
+                alt="journal image"
+                className="rounded-xl object-cover object-center max-h-80 md:max-h-96 w-full border-2"
+            />
+        } else if(JournalState.journal.image.name) {
+            image = <img
+                src={URL.createObjectURL(JournalState.journal.image)}
+                alt="journal image"
+                className="rounded-xl object-cover object-center max-h-80 md:max-h-96 w-full border-2"
+            />
+        }
+    }
+
     return (
         <div className="bg-narvik-light min-h-screen">
             <div className="flex flex-row py-3 justify-between items-center px-3">
@@ -80,13 +97,9 @@ export const view: React.FC<ViewProps> = (props) => {
                 />
             </div>
 
-            {JournalState.journal?.image && (
+            {(JournalState.journal?.image && image) && (
                 <div className="mx-3" onClick={() => setShowImage(true)}>
-                    <img
-                        src={`data:image/png;base64,${JournalState.journal.image}`}
-                        alt="journal image"
-                        className="rounded-xl object-cover object-center max-h-80 md:max-h-96 w-full border-2"
-                    />
+                    {image}
                 </div>
             )}
 
@@ -135,7 +148,10 @@ export const view: React.FC<ViewProps> = (props) => {
                     onClick={() => onClick(5)}
                 />
             </div>
-            <ImageModal show={showImage} image={JournalState.journal?.image!} onClose={() => setShowImage(false)} />
+            {
+                (showImage && typeof JournalState.journal?.image === "string") &&
+                <ImageModal show={showImage} image={ JournalState.journal?.image!} onClose={() => setShowImage(false)} />
+            }
             {DeleteButton}
         </div>
     );
