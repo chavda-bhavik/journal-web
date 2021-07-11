@@ -1,10 +1,10 @@
-import React from 'react'
+import React from 'react';
 import { Backdrop } from '../Backdrop';
 
 interface ImageModalProps {
-    show: boolean
-    imageSrc: string
-    onClose: () => void
+    show: boolean;
+    imageSrc: string;
+    onClose: () => void;
 }
 
 export const ImageModal: React.FC<ImageModalProps> = ({ show, imageSrc, onClose, children }) => {
@@ -22,4 +22,4 @@ export const ImageModal: React.FC<ImageModalProps> = ({ show, imageSrc, onClose,
             </div>
         </Backdrop>
     );
-}
+};

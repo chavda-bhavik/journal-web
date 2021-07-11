@@ -57,11 +57,15 @@ export const view: React.FC<ViewProps> = (props) => {
     let DeleteButton = null;
     if (!edit) {
         DeleteButton = (
-            <FixedButton
-                icon={['fas', 'trash-alt']}
-                className="bottom-5 right-5 bg-white text-red-500"
-                onClick={deleteHandler}
-            />
+            <div className="sticky bottom-0 bg-narvik-light w-full p-2 shadow-2xl">
+                <Button
+                    className="w-full font-normal text-base text-white"
+                    danger={true}
+                    onClick={deleteHandler}
+                >
+                    <FontAwesomeIcon icon={['fas', 'trash-alt']} /> Delete Journal
+                </Button>
+            </div>
         );
     }
 
@@ -88,12 +92,12 @@ export const view: React.FC<ViewProps> = (props) => {
 
     let imageSrc = '';
     if (journal) {
-        if (typeof journal.image === 'string') imageSrc = journal.image;
+        if (typeof journal.image === 'string') imageSrc = `data:image/png;base64,${journal.image}`;
         else if (journal.image?.name) imageSrc = URL.createObjectURL(journal.image);
     }
 
     return (
-        <div className="bg-narvik-light min-h-screen">
+        <div className="bg-narvik-light min-h-screen max-w-lg border-2">
             <div className="flex flex-row py-3 justify-between items-center px-3">
                 <Button onClick={onBackClick}>
                     <FontAwesomeIcon icon={['fas', 'arrow-left']} />

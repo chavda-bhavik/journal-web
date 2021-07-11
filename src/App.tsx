@@ -12,13 +12,13 @@ function App() {
     registerSW();
 
     return (
-        <>
+        <div className="flex justify-center items-center bg-brown-light">
             <Route path="/" component={home} />
             {/* @ts-ignore */}
             <Route path="/view/:id" component={view} />
             <Route path="/journal" component={Journal} />
             <Route path="/gallary" component={Gallary} />
-        </>
+        </div>
     );
 }
 

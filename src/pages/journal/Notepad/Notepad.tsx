@@ -1,7 +1,6 @@
 import React, { useState, createRef, useEffect } from 'react';
 import { isLastStage } from '../../../shared/helper';
 import { useKeyPress } from '../../../shared/hooks/useKeyPress';
-import { FixedBottomContainer } from '../FixedBottomContainer/FixedBottomContainer';
 import { IconButton } from '../IconButton/IconButton';
 import { JournalHeader } from '../JournalHeader/JournalHeader';
 import { Section } from '../Section/Section';
@@ -131,7 +130,7 @@ export const Notepad: React.FC<NotepadProps> = ({
                 />
             </div>
 
-            <FixedBottomContainer>
+            <div className="absolute bottom-2 w-full px-3 pb-2">
                 <div className="inline-block">
                     <label htmlFor="imgInput" onClick={() => imageRef.current?.click()}>
                         <IconButton icon={['fas', 'image']} className="mr-2" active={!!file} />
@@ -153,7 +152,7 @@ export const Notepad: React.FC<NotepadProps> = ({
                     onClick={() => handleStageChange(true)}
                     icon={['fas', isLastStage(stage, phase) ? 'check' : 'arrow-right']}
                 />
-            </FixedBottomContainer>
+            </div>
         </>
     );
 };

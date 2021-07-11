@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useKeyPress } from '../../../shared/hooks/useKeyPress';
-import { FixedBottomContainer } from '../FixedBottomContainer/FixedBottomContainer';
 import { IconButton } from '../IconButton/IconButton';
 import { JournalHeader } from '../JournalHeader/JournalHeader';
 
@@ -38,13 +37,13 @@ export const SectionQuote: React.FC<SectionQuoteProps> = ({
             <p className="max-w-sm mx-auto text-center mt-40 font-highlights text-lg md:text-2xl leading-7 tracking-wide">
                 {quote}
             </p>
-            <FixedBottomContainer>
+            <div className="absolute bottom-2 w-full px-3 pb-2">
                 <IconButton
                     className="float-right"
                     onClick={() => changeStage(1)}
                     icon={['fas', 'arrow-right']}
                 />
-            </FixedBottomContainer>
+            </div>
         </>
     );
 };

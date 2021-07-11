@@ -92,7 +92,7 @@ export const Journal = (): JSX.Element => {
     };
 
     return (
-        <div className="bg-narvik-light min-h-screen h-full">
+        <div className="bg-narvik-light min-h-screen max-w-lg sm:w-128 border-2 relative h-full">
             {info.stage === 0 && info.phase !== 'evening' ? (
                 <SectionQuote
                     quote="Here you're come to cont the blessings not regretting anything or feeling sad for."

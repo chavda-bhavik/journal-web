@@ -9,6 +9,8 @@ import { Quote } from './Quote';
 import { Journals } from './Journals';
 import { FixedButton } from '../../shared/components/FixedButton';
 import { useKeyPress } from '../../shared/hooks/useKeyPress';
+import { Button } from '../../shared/components/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface homeProps {}
 
@@ -34,7 +36,7 @@ export const home: React.FC<homeProps> = ({}) => {
     };
 
     return (
-        <div className={`bg-narvik-light min-h-screen space-y-3`}>
+        <div className={`bg-narvik-light border-2 min-h-screen space-y-3 max-w-lg relative`}>
             <div className=" py-2 px-3">
                 <Navbar />
 
@@ -53,11 +55,22 @@ export const home: React.FC<homeProps> = ({}) => {
 
             <Journals journals={JournalState.groupedJournals} />
 
-            <FixedButton
+            {JournalState.searched !== true && (
+                <div className="sticky bottom-0 bg-narvik-light w-full p-2 shadow-2xl">
+                    <Button
+                        active={true}
+                        className="w-full font-normal text-base"
+                        onClick={() => toggleDateModal(true)}
+                    >
+                        <FontAwesomeIcon icon={['fas', 'plus']} /> Add Journal
+                    </Button>
+                </div>
+            )}
+            {/* <FixedButton
                 icon={['fas', 'plus']}
                 className="bottom-2 right-2 text-brown-dark"
                 onClick={() => toggleDateModal(true)}
-            />
+            /> */}
 
             <DateModal
                 journals={JournalState.formattedJournals}
