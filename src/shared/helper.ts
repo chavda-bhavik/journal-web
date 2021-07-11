@@ -87,6 +87,7 @@ export const formatJournals = (journals: Journal[] | undefined): FormattedJourna
                 id: journal.id,
                 date: date.getTime().toString(),
                 status: journal.status,
+                image: journal.image,
                 ...getPriorityJournal(journal, 'affirmation'),
             });
             // take greatfullness
@@ -96,6 +97,7 @@ export const formatJournals = (journals: Journal[] | undefined): FormattedJourna
                 id: journal.id,
                 status: journal.status,
                 date: date.getTime().toString(),
+                image: journal.image,
                 ...getPriorityJournal(journal, 'greatfullness'),
             });
         }

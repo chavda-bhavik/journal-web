@@ -3,11 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useKeyPress } from '../../../shared/hooks/useKeyPress';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import { resetJournals, searchJournals } from '../../../store/journal/Actions';
+import { useLocation } from 'wouter';
 
 export const Navbar: React.FC<{}> = () => {
     const [showSearch, setShowSearch] = useState(false);
     const journals = useAppSelector((state) => state.journal.journals);
     const dispatch = useAppDispatch();
+    const [, setLocation] = useLocation();
     const searchRef = React.useRef() as React.MutableRefObject<HTMLInputElement>;
 
     const searchPressed = useKeyPress({ userKeys: ['s'] });
@@ -40,13 +42,22 @@ export const Navbar: React.FC<{}> = () => {
         setShowSearch(false);
     };
 
+    const goToGallary = () => {
+        setLocation('/gallary');
+    };
+
     const navContent = (
         <div className="flex justify-between items-center md:py-2">
-            <div className="flex-initial items-center">
+            <div className="flex-initial items-center cursor-not-allowed">
                 <FontAwesomeIcon icon={['fas', 'calendar-day']} size="lg" />
                 <h3 className="ml-2 inline-block text-xl">Timeline</h3>
             </div>
-            <div className="flex-initial gap-2 sm:gap-3 md:gap-4 flex items-center">
+            <div className="flex-initial gap-2 sm:gap-3 md:gap-4 flex items-center cursor-pointer">
+                <FontAwesomeIcon
+                    icon={['fas', 'grip-horizontal']}
+                    size="lg"
+                    onClick={goToGallary}
+                />
                 <FontAwesomeIcon
                     icon={['fas', 'search']}
                     size="lg"

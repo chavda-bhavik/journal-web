@@ -51,6 +51,7 @@ export const Notepad: React.FC<NotepadProps> = ({
 
     const listRef = createRef<HTMLOListElement>();
     const paraRef = createRef<HTMLParagraphElement>();
+    const imageRef = createRef<HTMLInputElement>();
     const isTextStage = (stg: number): boolean => stg === 3 || stg === 5;
 
     let leftKeyPressed = useKeyPress({ userKeys: ['Control', 'ArrowLeft'] });
@@ -131,9 +132,22 @@ export const Notepad: React.FC<NotepadProps> = ({
             </div>
 
             <FixedBottomContainer>
-                <input type="file" accept="image/*" capture="camera" onChange={onChange} />
-                {/* <IconButton icon={['fas', 'image']} className="mr-2" />
-                <IconButton icon={['fas', 'ellipsis-h']} /> */}
+                <div className="inline-block">
+                    <label htmlFor="imgInput" onClick={() => imageRef.current?.click()}>
+                        <IconButton icon={['fas', 'image']} className="mr-2" active={!!file} />
+                    </label>
+                    <input
+                        ref={imageRef}
+                        type="file"
+                        id="imgInput"
+                        name="imgInput"
+                        accept="image/*"
+                        capture="camera"
+                        onChange={onChange}
+                        className="hidden"
+                    />
+                </div>
+                {/* <IconButton icon={['fas', 'ellipsis-h']} /> */}
                 <IconButton
                     className="float-right"
                     onClick={() => handleStageChange(true)}

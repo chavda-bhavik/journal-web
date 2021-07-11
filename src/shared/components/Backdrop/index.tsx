@@ -1,12 +1,15 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useEffect } from 'react';
+import { IconButton } from '../../../pages/journal/IconButton/IconButton';
 
 interface BackdropProps {
     show: boolean;
     onClose: () => void;
+    bottomCenter?: boolean
 }
 
-export const Backdrop: React.FC<BackdropProps> = ({ show, onClose, children }) => {
+export const Backdrop: React.FC<BackdropProps> = ({ show, onClose, children, bottomCenter = true }) => {
     useEffect(() => {
         toggleBodyOverflowHidden(show);
     }, [show]);
@@ -27,7 +30,8 @@ export const Backdrop: React.FC<BackdropProps> = ({ show, onClose, children }) =
             role="dialog"
             aria-modal="true"
         >
-            <div className="flex items-end xs:items-center justify-center min-h-screen h-full pt-4">
+            <div className={`flex ${bottomCenter ? 'items-end xs:items-center' : 'items-center'} justify-center min-h-screen h-full`}>
+                <IconButton icon={["fas", "times"]} className="z-20 absolute top-4 right-4" size="1x" onClick={onClose} />
                 <div
                     className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
                     aria-hidden="true"
@@ -39,7 +43,7 @@ export const Backdrop: React.FC<BackdropProps> = ({ show, onClose, children }) =
                 >
                     &#8203;
                 </span>
-                <div className="bg-white rounded-t-md xs:rounded-md text-left overflow-hidden transform transition-all w-full xs:w-auto z-20">
+                <div className="transform transition-all z-20 w-auto">
                     {children}
                 </div>
             </div>

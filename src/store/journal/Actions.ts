@@ -15,6 +15,7 @@ const JournalsQuery = gql`
             highlights
             improvements
             status
+            image
         }
     }
 `;
@@ -29,6 +30,7 @@ const SingleJournalQuery = gql`
             improvements
             date
             status
+            image
         }
     }
 `;
@@ -80,6 +82,7 @@ const DeleteJournalMutation = gql`
             improvements
             date
             status
+            image
         }
     }
 `;

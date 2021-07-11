@@ -48,6 +48,13 @@ export const Journal: React.FC<JournalProps> = ({
                 <p className="text-brown-dark break-all text-lg sm:text-xl md:text-2xl font-normal">
                     {journal.text}
                 </p>
+                {journal.image && (
+                    <img
+                        src={`data:image/png;base64,${journal.image}`}
+                        alt="journal image"
+                        className="rounded-xl object-cover object-center max-h-52 w-full border-2"
+                    />
+                )}
             </div>
         </div>
     );

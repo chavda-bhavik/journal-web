@@ -8,6 +8,7 @@ import { getSingleJournal, deleteJournal } from '../../store/journal/Actions';
 import { useLocation } from 'wouter';
 import { FixedButton } from '../../shared/components/FixedButton';
 import { useKeyPress } from '../../shared/hooks/useKeyPress';
+import { ImageModal } from '../../shared/components/ImageModal';
 
 interface ViewProps {
     params: {
@@ -18,6 +19,7 @@ interface ViewProps {
 export const view: React.FC<ViewProps> = (props) => {
     const [, setLocation] = useLocation();
     const [edit, setEdit] = useState<boolean>(false);
+    const [showImage, setShowImage] = useState<boolean>(false);
     const JournalState = useAppSelector((state) => state.journal);
     const dispatch = useAppDispatch();
 
@@ -78,15 +80,15 @@ export const view: React.FC<ViewProps> = (props) => {
                 />
             </div>
 
-            {/* <div className="mx-3">
-                <img
-                    src="https://dummyimage.com/600x400/e9e4eb/000000"
-                    alt="journal image"
-                    width="600"
-                    height={400}
-                    className="rounded-xl w-full"
-                />
-            </div> */}
+            {JournalState.journal?.image && (
+                <div className="mx-3" onClick={() => setShowImage(true)}>
+                    <img
+                        src={`data:image/png;base64,${JournalState.journal.image}`}
+                        alt="journal image"
+                        className="rounded-xl object-cover object-center max-h-80 md:max-h-96 w-full border-2"
+                    />
+                </div>
+            )}
 
             <div className="px-3 pb-5">
                 <FontAwesomeIcon icon={['fas', 'sun']} className="mt-4 mb-2" size="lg" />
@@ -133,6 +135,7 @@ export const view: React.FC<ViewProps> = (props) => {
                     onClick={() => onClick(5)}
                 />
             </div>
+            <ImageModal show={showImage} image={JournalState.journal?.image!} onClose={() => setShowImage(false)} />
             {DeleteButton}
         </div>
     );

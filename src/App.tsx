@@ -6,6 +6,7 @@ import { registerSW } from 'virtual:pwa-register';
 import { home } from './pages/home';
 import { view } from './pages/view';
 import { Journal } from './pages/journal';
+import { Gallary } from './pages/gallary';
 
 function App() {
     registerSW();
@@ -16,6 +17,7 @@ function App() {
             {/* @ts-ignore */}
             <Route path="/view/:id" component={view} />
             <Route path="/journal" component={Journal} />
+            <Route path="/gallary" component={Gallary} />
         </>
     );
 }

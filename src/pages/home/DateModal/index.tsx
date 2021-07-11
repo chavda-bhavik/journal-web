@@ -72,22 +72,24 @@ export const DateModal: React.FC<DateModalProps> = ({
 
     return (
         <Backdrop show={show} onClose={onClose}>
-            <DatePicker selectedDay={selectedDay} setSelectedDay={onDateSelect} />
-            <div className="bg-gray-50 px-4 xs:pb-3 pb-6 w-full">
-                <button
-                    type="button"
-                    className="block w-full rounded-md shadow border border-transparent bg-gold-base px-4 py-2 text-base font-medium text-brown-dark focus:outline-none"
-                    onClick={() => onButtonClick(buttonData.primaryButtonLink)}
-                >
-                    {buttonData.primaryButtonText}
-                </button>
-                <button
-                    type="button"
-                    className="mt-3 w-full rounded-md shadow border border-transparent bg-gray-200 px-4 py-2 text-base font-medium text-brown-dark focus:outline-none"
-                    onClick={() => onButtonClick(buttonData.secondaryButtonLink)}
-                >
-                    {buttonData.secondaryButtonText}
-                </button>
+            <div className="bg-white rounded-t-md xs:rounded-md text-left w-full sm:w-min">
+                <DatePicker selectedDay={selectedDay} setSelectedDay={onDateSelect} />
+                <div className="bg-gray-50 px-4 xs:pb-3 pb-6 w-full">
+                    <button
+                        type="button"
+                        className="block w-full rounded-md shadow border border-transparent bg-gold-base px-4 py-2 text-base font-medium text-brown-dark focus:outline-none"
+                        onClick={() => onButtonClick(buttonData.primaryButtonLink)}
+                    >
+                        {buttonData.primaryButtonText}
+                    </button>
+                    <button
+                        type="button"
+                        className="mt-3 w-full rounded-md shadow border border-transparent bg-gray-200 px-4 py-2 text-base font-medium text-brown-dark focus:outline-none"
+                        onClick={() => onButtonClick(buttonData.secondaryButtonLink)}
+                    >
+                        {buttonData.secondaryButtonText}
+                    </button>
+                </div>
             </div>
         </Backdrop>
     );

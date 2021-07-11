@@ -7,6 +7,7 @@ type Journal = {
     highlights?: string;
     improvements?: string;
     status: number;
+    image?: string;
 };
 type FormattedJournalType = {
     id: string;
@@ -14,6 +15,7 @@ type FormattedJournalType = {
     text: string;
     date: string;
     status: number;
+    image?: string;
 };
 type stats = {
     total: number;

@@ -51,7 +51,7 @@ export const Section: React.FC<SectionProps> = ({
     );
 
     return (
-        <div className={`px-2 py-2 h-full ${className}`} onClick={focusContent}>
+        <div className={`px-2 py-2 h-full cursor-text ${className}`} onClick={focusContent}>
             <p className={`text-narvik-medium uppercase`}>{title}</p>
             {isList ? list : normalText}
         </div>
