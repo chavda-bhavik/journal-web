@@ -11,6 +11,7 @@ interface IconButtonProps {
     size?: SizeProp;
     variant?: 'white' | 'narvik' | 'brown';
     shadow?: 'md' | 'lg' | 'none';
+    type?: 'submit' | 'button';
 }
 
 export const IconButton: React.FC<IconButtonProps> = ({
@@ -22,6 +23,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
     size = 'lg',
     variant = 'white',
     shadow = 'lg',
+    type = 'button',
 }) => {
     let classes = 'inline-block focus:outline-none rounded-full px-3 py-2 border-2';
     if (active) classes = classes + ' bg-gold-base';
@@ -36,7 +38,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
 
     classes += ' ' + className;
     return (
-        <button className={classes} disabled={disabled} onClick={onClick}>
+        <button type={type} className={classes} disabled={disabled} onClick={onClick}>
             <FontAwesomeIcon icon={icon} size={size} />
         </button>
     );

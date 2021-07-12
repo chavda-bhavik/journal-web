@@ -39,6 +39,9 @@ export const SectionQuote: React.FC<SectionQuoteProps> = ({
             </p>
             <div className="absolute bottom-2 w-full px-3 pb-2">
                 <IconButton
+                    variant="brown"
+                    shadow="md"
+                    active={true}
                     className="float-right"
                     onClick={() => changeStage(1)}
                     icon={['fas', 'arrow-right']}

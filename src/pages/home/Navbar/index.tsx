@@ -1,9 +1,10 @@
-import React, { LegacyRef, useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useEffect, useState } from 'react';
 import { useKeyPress } from '../../../shared/hooks/useKeyPress';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import { resetJournals, searchJournals } from '../../../store/journal/Actions';
 import { useLocation } from 'wouter';
+import { IconButton } from '../../../shared/components/IconButton/IconButton';
+import JournalImage from '../../../shared/assets/images/journal-icon.png';
 
 export const Navbar: React.FC<{}> = () => {
     const [showSearch, setShowSearch] = useState(false);
@@ -26,12 +27,9 @@ export const Navbar: React.FC<{}> = () => {
         if (showSearch) searchRef.current.focus();
     }, [showSearch]);
 
-    const onSearch = (e: React.SyntheticEvent) => {
-        e.preventDefault();
-        const target = e.target as typeof e.target & {
-            search: { value: string };
-        };
-        const searchValue = target.search.value;
+    const onSearch = (e?: React.SyntheticEvent) => {
+        if (e) e.preventDefault();
+        const searchValue = searchRef.current.value;
         if (searchValue) {
             dispatch(searchJournals(searchValue, journals));
         }
@@ -49,19 +47,22 @@ export const Navbar: React.FC<{}> = () => {
     const navContent = (
         <div className="flex justify-between items-center md:py-2">
             <div className="flex-initial items-center cursor-not-allowed">
-                <FontAwesomeIcon icon={['fas', 'calendar-day']} size="lg" />
-                <h3 className="ml-2 inline-block text-xl">Timeline</h3>
+                <img src={JournalImage} className="w-11 rounded-md lg:w-12" />
             </div>
             <div className="flex-initial gap-2 sm:gap-3 md:gap-4 flex items-center cursor-pointer">
-                <FontAwesomeIcon
+                <IconButton
                     icon={['fas', 'grip-horizontal']}
                     size="lg"
                     onClick={goToGallary}
+                    shadow="none"
+                    variant="white"
                 />
-                <FontAwesomeIcon
+                <IconButton
                     icon={['fas', 'search']}
                     size="lg"
                     onClick={() => setShowSearch(true)}
+                    shadow="none"
+                    variant="white"
                 />
             </div>
         </div>
@@ -69,16 +70,32 @@ export const Navbar: React.FC<{}> = () => {
 
     const searchContent = (
         <form className="flex flex-row items-center md:py-1" onSubmit={onSearch}>
-            <FontAwesomeIcon icon={['fas', 'search']} size="lg" className="mx-1" />
+            <IconButton
+                icon={['fas', 'times']}
+                size="lg"
+                onClick={onClose}
+                shadow="none"
+                type="button"
+                variant="brown"
+            />
             <input
                 ref={searchRef}
                 type="text"
                 name="search"
                 className="w-full bg-narvik-light border-b-2 border-gold-base mx-2 px-1 pt-1 focus:outline-none text-xl"
             />
-            <FontAwesomeIcon icon={['fas', 'times']} size="lg" className="mx-1" onClick={onClose} />
+            <IconButton
+                icon={['fas', 'search']}
+                size="lg"
+                type="submit"
+                className="ml-1"
+                active={true}
+                onClick={onSearch}
+                shadow="none"
+                variant="brown"
+            />
         </form>
     );
 
-    return <div className="mt-1">{showSearch ? searchContent : navContent}</div>;
+    return <div className="mt-1 h-12 md:h-16">{showSearch ? searchContent : navContent}</div>;
 };

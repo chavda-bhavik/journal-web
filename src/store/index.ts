@@ -9,14 +9,13 @@ import {
     PERSIST,
     PURGE,
     REGISTER,
-    PersistConfig,
 } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import localfroage from 'localforage';
 
 // reducers
 import journalReducer from './journal';
 
-const persistConfig = { key: 'root', version: 1, storage, whitelist: ['journal'] };
+const persistConfig = { key: 'root', version: 1, storage: localfroage, whitelist: ['journal'] };
 
 const rootReducer = combineReducers({
     journal: journalReducer,

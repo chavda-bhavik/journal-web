@@ -11,6 +11,7 @@ import { useKeyPress } from '../../shared/hooks/useKeyPress';
 import { Button } from '../../shared/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { BottomSticky } from '../../shared/components/BottomSticky';
+import { CSSTransition } from 'react-transition-group';
 
 interface homeProps {}
 
@@ -39,19 +40,28 @@ export const home: React.FC<homeProps> = ({}) => {
         <div className={`container space-y-3 relative`}>
             <div className=" py-2 px-3">
                 <Navbar />
-
-                {!JournalState.searched && (
+                <CSSTransition
+                    in={!JournalState.searched}
+                    timeout={500}
+                    classNames="blur"
+                    unmountOnExit
+                >
                     <TodaysContent todaysJournal={JournalState.todaysJournal} />
-                )}
+                </CSSTransition>
             </div>
 
-            {!JournalState.searched && (
+            <CSSTransition
+                in={!JournalState.searched}
+                timeout={500}
+                classNames="blur"
+                unmountOnExit
+            >
                 <>
                     <Stats stats={JournalState.stats} />
 
                     <Quote author="Bhavik Chavda" quote="Watever we give, we receive." />
                 </>
-            )}
+            </CSSTransition>
 
             <Journals journals={JournalState.groupedJournals} />
 

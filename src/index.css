@@ -6,4 +6,51 @@
     .container {
         @apply bg-narvik-light min-h-screen h-full max-w-lg border-2 rounded-sm border-brown-dark;
     }
+    .pop-up-enter {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    .pop-up-enter-active {
+        opacity: 1;
+        transform: translateX(0);
+        transition: opacity 300ms, transform 300ms;
+    }
+    .pop-up-exit {
+        opacity: 1;
+    }
+    .pop-up-exit-active {
+        opacity: 0;
+        transform: scale(0.95);
+        transition: opacity 300ms, transform 200ms;
+    }
+
+    .blur-enter {
+        opacity: 0;
+    }
+    .blur-enter-active {
+        opacity: 1;
+        transition: opacity 300ms ease-in;
+    }
+    .blur-exit {
+        opacity: 1;
+    }
+    .blur-exit-active {
+        opacity: 0;
+        transition: opacity 200ms ease-out;
+    }
+
+    .item-enter {
+        opacity: 0;
+    }
+    .item-enter-active {
+        opacity: 1;
+        transition: opacity 300ms ease-in;
+    }
+    .item-exit {
+        opacity: 1;
+    }
+    .item-exit-active {
+        opacity: 0;
+        transition: opacity 1000ms ease-in;
+    }
 }

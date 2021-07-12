@@ -8,6 +8,7 @@ import { Title } from '../home/Title';
 import { Button } from '../../shared/components/Button';
 import { ImageModal } from '../../shared/components/ImageModal';
 import { IconButton } from '../../shared/components/IconButton/IconButton';
+import { Image } from './Image/index';
 
 interface GallaryProps {}
 
@@ -37,31 +38,13 @@ export const Gallary: React.FC<GallaryProps> = ({}) => {
                 shadow="none"
                 variant="narvik"
             />
-            {/* <button
-                className="rounded-md px-3 py-2 focus:outline-none shadow-lg bg-narvik-medium"
-                onClick={onBackClick}
-            >
-                <FontAwesomeIcon icon={['fas', 'arrow-left']} />
-            </button> */}
+
             <Title title="Gallary" className="font-highlights my-3" />
             <div className="grid grid-cols-3 gap-2">
                 {JournalsState.formattedJournals.reduce((journals: any[], journal) => {
                     if (journal.image) {
                         journals.push(
-                            <div
-                                key={journal.id}
-                                className="relative"
-                                onClick={() => setJournal(journal)}
-                            >
-                                <img
-                                    src={`data:image/png;base64,${journal.image}`}
-                                    alt="journal image"
-                                    className="rounded-xl object-cover object-center h-32 w-full border-2 border-narvik-medium"
-                                />
-                                <span className="absolute bottom-2 left-2 text-white text-lg md:text-2xl lg:text-3xl font-medium p-2">
-                                    {dayjs(Number(journal.date)).format('D MMM')}
-                                </span>
-                            </div>,
+                            <Image key={journal.id} journal={journal} onClick={setJournal} />,
                         );
                     }
                     return journals;
