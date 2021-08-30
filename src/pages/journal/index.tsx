@@ -95,7 +95,7 @@ export const Journal = (): JSX.Element => {
         <div className="container sm:w-128 relative">
             {info.stage === 0 && info.phase !== 'evening' ? (
                 <SectionQuote
-                    quote="Here you're come to cont the blessings not regretting anything or feeling sad for."
+                    quote="Be better, not bitter."
                     changeStage={changeStage}
                     progressPercentage={
                         info.phase === 'complete'
