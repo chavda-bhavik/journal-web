@@ -65,12 +65,3 @@ yarn dev
 * Twitter: [@heybhavik](https://twitter.com/heybhavik)
 * Github: [@chavda-bhavik](https://github.com/chavda-bhavik)
 * LinkedIn: [@heybhavik](https://linkedin.com/in/heybhavik)
-
-
-[1]: https://tailwindcss.com
-[2]: https://vitejs.dev
-[3]: https://redux-toolkit.js.org)
-[4]: https://fontawesome.com
-[5]: https://github.com/molefrog/wouter
-[6]: https://reactcommunity.org/react-transition-group
-[7]: https://github.com/prisma-labs/graphql-request)<dd>
