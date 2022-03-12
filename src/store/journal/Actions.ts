@@ -87,18 +87,18 @@ const DeleteJournalMutation = gql`
     }
 `;
 
-export const fetchJournals = () => async (dispatch: AppDispatch) => {
+export const fetchJournals = (): any => async (dispatch: AppDispatch) => {
     try {
         dispatch(loading());
         let result = await client.request(JournalsQuery);
         setJournals(result.getAllJournals, dispatch, true);
     } catch (err) {
-        dispatch(error(err.message));
+        dispatch(error((err as Error).message));
     }
 };
 
 export const getSingleJournal =
-    (id: string, journals: Journal[], fetched: Boolean) => async (dispatch: AppDispatch) => {
+    (id: string, journals: Journal[], fetched: Boolean): any => async (dispatch: AppDispatch) => {
         try {
             dispatch(loading());
             let singleJournal: Journal | undefined;
@@ -110,12 +110,12 @@ export const getSingleJournal =
                 dispatch(journal(result.journal));
             }
         } catch (err) {
-            dispatch(error(err.message));
+            dispatch(error((err as Error).message));
         }
     };
 
 export const makeJournal =
-    (journalData: Journal, journals: Journal[], journalDateValue: number, image?: File) =>
+    (journalData: Journal, journals: Journal[], journalDateValue: number, image?: File): any =>
     async (dispatch: AppDispatch) => {
         let journalToBeUpdated = journalData;
         if (image) journalToBeUpdated.image = image;
@@ -128,7 +128,7 @@ export const makeJournal =
             // if request gets succeed and response is available
             if (result.journal) journalToBeUpdated = result.journal;
         } catch (err) {
-            dispatch(error(err.message));
+            dispatch(error((err as Error).message));
         }
 
         journalToBeUpdated.date = '' + journalDateValue;
@@ -159,7 +159,7 @@ export const makeJournal =
         );
     };
 
-export const deleteJournal = (id: string, journals: Journal[]) => async (dispatch: AppDispatch) => {
+export const deleteJournal = (id: string, journals: Journal[]): any => async (dispatch: AppDispatch) => {
     try {
         dispatch(loading());
         await client.request(DeleteJournalMutation, {
@@ -168,17 +168,17 @@ export const deleteJournal = (id: string, journals: Journal[]) => async (dispatc
         let newJournals = journals.filter((journal) => journal.id !== id);
         setJournals(newJournals, dispatch);
     } catch (err) {
-        dispatch(error(err.message));
+        dispatch(error((err as Error).message));
     }
     let newJournals = journals.filter((jour) => jour.id !== id);
     setJournals(newJournals, dispatch);
 };
 
-export const clearJournal = () => (dispatch: AppDispatch) => {
+export const clearJournal = (): any => (dispatch: AppDispatch) => {
     dispatch(resetJournal());
 };
 
-export const searchJournals = (term: string, journals: Journal[]) => (dispatch: AppDispatch) => {
+export const searchJournals = (term: string, journals: Journal[]): any => (dispatch: AppDispatch) => {
     let filteredJournals = journals.filter(
         (journal) =>
             journal.actions?.includes(term) ||
@@ -198,7 +198,7 @@ export const searchJournals = (term: string, journals: Journal[]) => (dispatch: 
     );
 };
 
-export const resetJournals = (journals: Journal[]) => (dispatch: AppDispatch) => {
+export const resetJournals = (journals: Journal[]): any => (dispatch: AppDispatch) => {
     let filteredJournals = journals;
     let formattedJournals = formatJournals(filteredJournals);
     let groupedJournals = groupJournals(formattedJournals);
