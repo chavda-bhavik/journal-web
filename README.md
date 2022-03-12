@@ -1,67 +1,59 @@
-<h1 align="center">Welcome to 5 Minute Journal Clone 👋</h1>
-<p>
-  <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
-  <a href="https://twitter.com/heybhavik" target="_blank">
-    <img alt="Twitter: heybhavik" src="https://img.shields.io/twitter/follow/heybhavik.svg?style=social" />
-  </a>
-</p>
+<div align="center">
+  <h2>5-Minute-Journal Clone</h2>
 
-> Web Clone of **5 Minute Journal** Mobile Application, completely rewritten using react and tailwindcss
-
-## 🍱 Things used for building
-<dl>
-  <dt>💅 Styling</dt>
-  <dd><a href="https://tailwindcss.com" target="_blank">TailwindCSS</a></dd>
+  ### Web Clone of **5-Minute-Journal** Mobile Application, developed using react and tailwindcss
   
-  <dt>🧰 Build Tool</dt>
-  <dd><a href="https://vitejs.dev" target="_blank">ViteJS</a></dd>
-  
-  <dt>📊 State Management</dt>
-  <dd><a href="https://redux-toolkit.js.org" target="_blank">redux-toolkit</a></dd>
-  
-  <dt>🌞 Icons</dt>
-  <dd><a href="https://fontawesome.com" target="_blank">Font Awesome</a></dd>
-  
-  <dt>🛣️ Routing</dt>
-  <dd><a href="https://github.com/molefrog/wouter" target="_blank">Wouter</a> Small Size & minimalist-friendly</dd>
-  
-  <dt>🌼 Animation<dt>
-  <dd><a href="https://reactcommunity.org/react-transition-group" target="_blank">teact-transition-group</a><dd>
-  
-  <dt>🚀 API Requests<dt>
-  <dd><a href="https://github.com/prisma-labs/graphql-request" target="_blank">grapqhl-request</a><dd>
-</dl>
+  ![journal-clone](https://user-images.githubusercontent.com/50201755/158015063-97cd6059-7920-4b48-98f1-55368db55f47.gif)
 
-## ✨ Features
-* **PWA**, App gets cached automatically 
-* Offline journal entries gets cached and restored when internet is available
-* Journals get stored and maintained locally
-* Responsive
-* Very small bundle Size
-* Facility to add photo to the journal
-* Gallary view for Journal Photos
-* Journals timeline view on Homepage
-* Calendar to quickly jump to journals
-* Search
+  <a href="https://journal-clone.herokuapp.com" target="_blank">Live demo</a> | <a href="https://github.com/chavda-bhavik/journal-api" target="_blank">API Code</a>
+</div>
 
-## 📩 Install
+## Running locally
 
-```sh
-yarn install
-```
+### Setup
+* Setup Backend Application from [Here](https://github.com/chavda-bhavik/journal-api)
 
-## 💨 Run
-To run this app in local environment you have to setup backend residing at [journal-api](https://github.com/chavda-bhavik/journal-api), then you can start the application with following command
+### Steps
+- `git clone https://github.com/chavda-bhavik/repscounter`
+- `yarn` (after navigating inside the directory)
+- `yarn dev`
 
-```sh
-yarn dev
-```
+----
 
-## 😎 Author
+## About RepsCounter
 
-👤 **Bhavik Chavda**
+### Pages
+- Home view with ability to Search
+- Gallary view
+- Journal Details view
+- Notepad
 
-* Website: bhavikchavda.com
-* Twitter: [@heybhavik](https://twitter.com/heybhavik)
-* Github: [@chavda-bhavik](https://github.com/chavda-bhavik)
-* LinkedIn: [@heybhavik](https://linkedin.com/in/heybhavik)
+### Facilities
+- Manage Daily Journals
+- Statistics on added Journals
+- PWA & Store data locally
+
+### Features
+- Facility to Add Photo in Journal
+- Interactive Animations using **react-transition-group**
+- Handy calendar to quickly jump to journals
+- Easy to understand code and project structure
+- Using **Redux Toolkit** for global state management
+- Easy & Lightweight frontend tooling with **Vite**
+- Linting and formatting with **eslint** and **prettier**
+- Responsive & small bundle Size
+
+## Technologies
+<ul>
+  <li><a href="https://vitejs.dev/" target="_blank">ViteJS</a> To Build & Develop</li>
+  <li><a href="https://reactjs.org" target="_blank">React</a> Library to Build awesome User Interface</li>
+  <li><a href="https://tailwindcss.com" target="_blank">TailwindCSS</a> To Style the Application</li>
+</ul>
+<ul>
+  <li><a href="https://github.com/molefrog/wouter" target="_blank">Wouter</a> A minimalist-friendly routing for React</li>
+  <li><a href="https://reactcommunity.org/react-transition-group" target="_blank">react-transition-group</a> For Animating UI</li>
+  <li><a href="https://redux-toolkit.js.org" target="_blank">redux-toolkit</a> To provide offline & central storage facility</li>
+  <li><a href="https://github.com/prisma-labs/graphql-request" target="_blank">Graphql-Request</a> To communicate with Backend</li>
+</ul>
+
+------------
